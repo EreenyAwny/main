@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:hive/hive.dart';
@@ -22,9 +23,22 @@ class SplashView extends StatelessWidget {
             Column(
               children: [
                 const SizedBox(height: 50),
-                const CircleAvatar(
-                  radius: 150,
-                  backgroundImage: AssetImage("images/1.jpg"),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(160),
+                    border: Border.all(
+                      color: mainColor,
+                      width: 8,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: CircleAvatar(
+                      radius: 150,
+                      backgroundImage: const AssetImage("images/1.jpg"),
+                      backgroundColor: mainColor,
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Padding(
@@ -49,10 +63,13 @@ class SplashView extends StatelessWidget {
                   backgroundColor: WidgetStateProperty.all(mainColor),
                 ),
                 onPressed: () {
+                  EasyLoading.show(status: 'loading...');
                   Box box = Hive.box(HiveApi.configrationBox);
-                  box.get(HiveApi.userNamekey) == null
-                      ? Get.offNamed(GetPages.kAuth)
-                      : Get.offNamed(GetPages.kHomeView);
+                  // box.get(HiveApi.userNamekey) == null
+                  //     ? Get.offNamed(GetPages.kAuth)
+                  //     : Get.offNamed(GetPages.kHomeView);
+                  Get.offNamed(GetPages.kAuth);
+                  EasyLoading.dismiss();
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),

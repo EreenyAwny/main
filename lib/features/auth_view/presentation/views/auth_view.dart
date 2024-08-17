@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mutamaruna/core/constants.dart';
 import 'package:mutamaruna/core/helper/get_pages.dart';
 import 'package:mutamaruna/core/hive_api.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class AuthView extends StatelessWidget {
   const AuthView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<String> labels = ['المؤتمر الاول', 'المؤتمر الثاني'];
     // form key
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
     TextEditingController controller = TextEditingController();
@@ -59,6 +62,31 @@ class AuthView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
+              ToggleSwitch(
+                animationDuration: Duration.hoursPerDay,
+                animate: true,
+                activeBgColor: [mainColor, mainColor],
+                activeFgColor: Colors.white,
+                dividerColor: mainColor,
+                fontSize: 22,
+                minWidth: 160,
+                curve: Curves.bounceInOut,
+                cornerRadius: 50,
+                centerText: true,
+                inactiveBgColor: Colors.grey.shade400,
+                inactiveFgColor: Colors.black,
+                textDirectionRTL: true,
+                initialLabelIndex: 0,
+                totalSwitches: labels.length,
+                labels: labels,
+                onToggle: (index) {
+                  if (index == null) {
+                    Box box = Hive.box(HiveApi.configrationBox);
+                    box.put(HiveApi.mNum, labels[index!]);
+                  }
+                },
+              ),
+              const SizedBox(height: 20),
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(
@@ -66,12 +94,15 @@ class AuthView extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
+                  EasyLoading.show(status: 'loading...');
                   // validate the form
                   if (!formKey.currentState!.validate()) {
+                    EasyLoading.dismiss();
                     return;
                   } else {
                     Box box = Hive.box(HiveApi.configrationBox);
                     box.put(HiveApi.userNamekey, controller.text);
+                    EasyLoading.dismiss();
                     Get.offNamed(GetPages.kHomeView);
                   }
                 },
