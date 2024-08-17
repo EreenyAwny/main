@@ -65,10 +65,9 @@ class SplashView extends StatelessWidget {
                 onPressed: () {
                   EasyLoading.show(status: 'loading...');
                   Box box = Hive.box(HiveApi.configrationBox);
-                  // box.get(HiveApi.userNamekey) == null
-                  //     ? Get.offNamed(GetPages.kAuth)
-                  //     : Get.offNamed(GetPages.kHomeView);
-                  Get.offNamed(GetPages.kAuth);
+                  box.get(HiveApi.userNamekey) == null
+                      ? Get.offNamed(GetPages.kAuth)
+                      : Get.offNamed(GetPages.kHomeView);
                   EasyLoading.dismiss();
                 },
                 child: const Padding(
