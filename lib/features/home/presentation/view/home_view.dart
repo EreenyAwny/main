@@ -26,11 +26,17 @@ class HomeView extends StatelessWidget {
       body: Column(
         children: [
           const SizedBox(height: 10),
-          Text(
-            "أهلاً: ${Hive.box(HiveApi.configrationBox).get(HiveApi.userNamekey)}",
-            style: const TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
+          Container(
+            decoration: BoxDecoration(
+              color: mainColor.withOpacity(0.5),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              "أهلاً: ${Hive.box(HiveApi.configrationBox).get(HiveApi.userNamekey)}",
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           Expanded(

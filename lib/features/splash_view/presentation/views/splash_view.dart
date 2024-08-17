@@ -80,12 +80,15 @@ class SplashView extends StatelessWidget {
                         color: Colors.white,
                         size: 25,
                       ),
-                      Text(
-                        "حوش اللي وقع منك",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          "حوش اللي وقع منك",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
                         ),
                       ),
                     ],

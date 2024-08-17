@@ -81,8 +81,14 @@ class AuthView extends StatelessWidget {
                 labels: labels,
                 onToggle: (index) {
                   if (index == null) {
+                    String mNum = "first";
+                    if (index == 0) {
+                      mNum = "first";
+                    } else {
+                      mNum = "second";
+                    }
                     Box box = Hive.box(HiveApi.configrationBox);
-                    box.put(HiveApi.mNum, labels[index!]);
+                    box.put(HiveApi.mNum, mNum);
                   }
                 },
               ),
