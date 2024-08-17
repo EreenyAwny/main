@@ -1,3 +1,6 @@
 import 'dart:ui';
 
-Color mainColor = const Color.fromARGB(255, 49, 33, 109);
+import 'package:flutter/material.dart';
+
+Color mainColor = Colors.blue;
+const String slogan = "حوش اللي وقع منك";

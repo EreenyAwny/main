@@ -55,9 +55,7 @@ class _Daragatmo2tamer1 extends State<Daragatmo2tamer1> {
           backgroundColor: mainColor,
           actions: [
             IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed("Password1");
-              },
+              onPressed: () {},
               icon: const Icon(
                 Icons.edit,
                 size: 30,
@@ -95,8 +93,6 @@ class GroupElement extends StatelessWidget {
       width: 300,
       color: const Color.fromARGB(255, 183, 110, 1),
       child: Column(
-        //mainAxisAlignment: MainAxisAlignment.start,
-        // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
             height: 310,

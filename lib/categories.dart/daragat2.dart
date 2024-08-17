@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/get_core.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:hive/hive.dart';
+import 'package:mutamaruna/core/helper/get_pages.dart';
 import 'package:mutamaruna/core/hive_api.dart';
 
 class Daragat2 extends StatelessWidget {
@@ -37,10 +40,9 @@ class Daragat2 extends StatelessWidget {
               Center(
                   child: InkWell(
                 onTap: () {
-                  HiveApi hiveApi = HiveApi();
-                  Box box = Hive.box(hiveApi.configration);
-                  box.put(hiveApi.mNum, "first");
-                  Navigator.of(context).pushNamed("Daragatmo2tamer1");
+                  Box box = Hive.box(HiveApi.configrationBox);
+                  box.put(HiveApi.mNum, "first");
+                  Get.toNamed(GetPages.kDaragatmo2tamer1);
                 },
                 child: Container(
                     padding: const EdgeInsets.all(10),
@@ -57,10 +59,9 @@ class Daragat2 extends StatelessWidget {
               Center(
                   child: InkWell(
                 onTap: () {
-                  HiveApi hiveApi = HiveApi();
-                  Box box = Hive.box(hiveApi.configration);
-                  box.put(hiveApi.mNum, "second");
-                  Navigator.of(context).pushNamed("Daragatmo2tamer2");
+                  Box box = Hive.box(HiveApi.configrationBox);
+                  box.put(HiveApi.mNum, "second");
+                  Get.toNamed(GetPages.kDaragatmo2tamer1);
                 },
                 child: Container(
                     padding: const EdgeInsets.all(10),

@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
 import 'package:mutamaruna/core/functions/check_internet.dart';
 import 'package:mutamaruna/core/hive_api.dart';
-import 'package:mutamaruna/core/models/groups_model.dart';
+import 'package:mutamaruna/core/models/groups_model/groups_model.dart';
 
 part 'deg_state.dart';
 
@@ -16,13 +16,11 @@ class DegCubit extends Cubit<DegState> {
     bool isconected = await checkInternet();
     if (isconected) {
       //getting data from firebase
-      HiveApi hiveApi = HiveApi();
-      Box box = Hive.box(hiveApi.configration);
-      String mNum = box.get(hiveApi.mNum);
+      Box box = Hive.box(HiveApi.configrationBox);
+      String mNum = box.get(HiveApi.mNum);
       var docments =
           FirebaseFirestore.instance.collection("motamerat").doc(mNum);
       List<GroupsData> groups = [];
-      print(docments.get());
     } else {
       // getting data from hive
     }
