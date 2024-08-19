@@ -3,13 +3,14 @@ import 'package:mutamaruna/categories.dart/daragat2.dart';
 import 'package:mutamaruna/categories.dart/derasetketab/derasetketab.dart';
 import 'package:mutamaruna/categories.dart/derasetketab/derasetketab1.dart';
 import 'package:mutamaruna/categories.dart/elpernameg.dart';
-import 'package:mutamaruna/features/magmoat/presentation/views/magmo3at.dart';
 import 'package:mutamaruna/categories.dart/mo2tamer1dargat/daragatmo2tamer1.dart';
 import 'package:mutamaruna/categories.dart/mo2tamer1dargat/editeldaraga1.dart';
 import 'package:mutamaruna/features/add_groups/presentation/views/add_groups_view.dart';
 import 'package:mutamaruna/features/auth_view/presentation/views/auth_view.dart';
 import 'package:mutamaruna/features/home/presentation/view/home_view.dart';
+import 'package:mutamaruna/features/magmoat/presentation/views/magmo3at.dart';
 import 'package:mutamaruna/features/notes/presentation/views/add_note_view.dart';
+import 'package:mutamaruna/features/notes/presentation/views/edit_note_view.dart';
 import 'package:mutamaruna/features/notes/presentation/views/notes_view.dart';
 import 'package:mutamaruna/features/notes/presentation/views/widgets/notedetails.dart';
 import 'package:mutamaruna/features/splash_view/presentation/views/splash_view.dart';
@@ -30,6 +31,7 @@ abstract class GetPages {
   static const String kAddGroups = "/kAddGroups";
   static const String kSplashView = "/kSplashView";
   static const String kAuth = "/kAuth";
+  static const String kEditNoteView = "/kEditNoteView";
 
   static List<GetPage<dynamic>> getPages = [
     GetPage(
@@ -100,6 +102,11 @@ abstract class GetPages {
     GetPage(
       name: kAuth,
       page: () => const AuthView(),
+      transition: ktransition,
+    ),
+    GetPage(
+      name: kEditNoteView,
+      page: () => const EditNoteView(),
       transition: ktransition,
     ),
   ];

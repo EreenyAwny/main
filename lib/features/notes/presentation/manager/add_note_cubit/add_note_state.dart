@@ -10,7 +10,3 @@ class Addfailure extends AddnotesState {
   final String erorr;
   Addfailure({required this.erorr});
 }
-
-class AddimageSuccess extends AddnotesState {}
-
-class Loadingstate extends AddnotesState {}

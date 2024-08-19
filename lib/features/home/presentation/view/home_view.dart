@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:hive/hive.dart';
 import 'package:mutamaruna/core/constants.dart';
 import 'package:mutamaruna/core/helper/get_pages.dart';
 import 'package:mutamaruna/core/hive_api.dart';
-import 'package:mutamaruna/features/notes/presentation/manager/notes_cubit/notes_cubit.dart';
 import 'package:mutamaruna/features/home/presentation/view/widgets/home_bloc_element.dart';
 
 class HomeView extends StatelessWidget {
@@ -70,7 +68,6 @@ class HomeView extends StatelessWidget {
                   InkWell(
                       onTap: () {
                         Get.toNamed(GetPages.kNotepage);
-                        BlocProvider.of<NotesCubit>(context).getnotes();
                       },
                       child: const HomeBlocElement(title: "📝اكتب ملاحظاتك")),
                   InkWell(
