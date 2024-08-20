@@ -2,6 +2,9 @@ import 'package:get/get.dart';
 import 'package:mutamaruna/categories.dart/daragat2.dart';
 import 'package:mutamaruna/categories.dart/derasetketab/derasetketab.dart';
 import 'package:mutamaruna/categories.dart/derasetketab/derasetketab1.dart';
+import 'package:mutamaruna/categories.dart/derasetketab/derasetketab2.dart';
+import 'package:mutamaruna/categories.dart/derasetketab/derasetketab3.dart';
+import 'package:mutamaruna/categories.dart/derasetketab/derasetketan4.dart';
 import 'package:mutamaruna/categories.dart/elpernameg.dart';
 import 'package:mutamaruna/categories.dart/mo2tamer1dargat/daragatmo2tamer1.dart';
 import 'package:mutamaruna/categories.dart/mo2tamer1dargat/editeldaraga1.dart';
@@ -32,6 +35,9 @@ abstract class GetPages {
   static const String kSplashView = "/kSplashView";
   static const String kAuth = "/kAuth";
   static const String kEditNoteView = "/kEditNoteView";
+  static const String kDerasetketab2 = "/kDerasetketab2";
+  static const String kDerasetketab3 = "/kDerasetketab3";
+  static const String kDerasetketab4 = "/kDerasetketab4";
 
   static List<GetPage<dynamic>> getPages = [
     GetPage(
@@ -107,6 +113,21 @@ abstract class GetPages {
     GetPage(
       name: kEditNoteView,
       page: () => const EditNoteView(),
+      transition: ktransition,
+    ),
+    GetPage(
+      name: kDerasetketab2,
+      page: () => const Derasetketab2(),
+      transition: ktransition,
+    ),
+    GetPage(
+      name: kDerasetketab3,
+      page: () => const Derasetketab3(),
+      transition: ktransition,
+    ),
+    GetPage(
+      name: kDerasetketab4,
+      page: () => const Derasetketab4(),
       transition: ktransition,
     ),
   ];

@@ -8,9 +8,9 @@ class Notedetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Your notes",
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          note_title,
+          style: const TextStyle(color: Colors.white),
         ),
         backgroundColor: mainColor,
       ),

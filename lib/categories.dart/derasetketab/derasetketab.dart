@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:mutamaruna/core/helper/get_pages.dart';
+import 'package:mutamaruna/core/widgets/card_derasetketab.dart';
 
 class Derasetketab extends StatelessWidget {
   const Derasetketab({super.key});
@@ -12,9 +13,7 @@ class Derasetketab extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           "🧐فتشوا الكتب",
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 255, 174, 75)),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         backgroundColor: const Color.fromARGB(255, 49, 33, 109),
       ),
@@ -31,6 +30,7 @@ class Derasetketab extends StatelessWidget {
           Column(
             children: [
               Container(
+                margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                 padding: const EdgeInsets.all(10),
                 color: Colors.white,
                 child: const Text(
@@ -40,92 +40,49 @@ class Derasetketab extends StatelessWidget {
                 ),
               ),
               InkWell(
-                  onTap: () {
-                    Get.toNamed(GetPages.kDerasetketab1);
-                  },
-                  child: const Card(
-                    child: ListTile(
-                      title: Text(
-                        "اليوم الاول : حوش اللى وقع منك روحيا ",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        "بطرس و يوحنا أنا أذهب لأتصيد ( انجيل يوحنا  21 : 1 - 7) ",
-                        textAlign: TextAlign.right,
-                      ),
-                    ),
-                  )),
-              const InkWell(
-                  child: Card(
-                child: ListTile(
-                  title: Text(
-                    "اليوم الثانى : حوش اللى وقع منك اجتماعيا ",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        "١ - راحيل و ليئه ( تكوين 30 : 1 - 24 )",
-                        textAlign: TextAlign.right,
-                      ),
-                      Text(
-                        "٢ ـ راعوث و نعمه (راعوث 1 : 1- 18)",
-                        textAlign: TextAlign.right,
-                      ),
-                    ],
-                  ),
+                onTap: () {
+                  Get.toNamed(GetPages.kDerasetketab1);
+                },
+                child: const CardDerasetketab(
+                  day_title: "اليوم الاول : حوش اللى وقع منك روحيا ",
+                  subject1:
+                      "بطرس و يوحنا أنا أذهب لأتصيد ( انجيل يوحنا  21 : 1 - 7) ",
+                  subject2: "",
                 ),
-              )),
-              const InkWell(
-                  child: Card(
-                child: ListTile(
-                  title: Text(
-                    "اليوم الثالث حوش اللى وقع منك اخلاقيا ",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        "١ - خطيئة داود مع بثشبع و قتل اوريا الحثى (2صم  11 : 1 - 18 )",
-                        textAlign: TextAlign.right,
-                      ),
-                      Text(
-                        "٢ ـ  سليمان ( انحرافه نحو الوثنيَّة) ( 1مل 11 : 1 - 12 )",
-                        textAlign: TextAlign.right,
-                      ),
-                    ],
-                  ),
+              ),
+              InkWell(
+                onTap: () {
+                  Get.toNamed(GetPages.kDerasetketab2);
+                },
+                child: const CardDerasetketab(
+                  day_title: "اليوم الثانى : حوش اللى وقع منك اجتماعيا ",
+                  subject1: "١ - راحيل و ليئه ( تكوين 30 : 1 - 24 )",
+                  subject2: "٢ ـ راعوث و نعمه (راعوث 1 : 1- 18)",
                 ),
-              )),
-              const InkWell(
-                  child: Card(
-                child: ListTile(
-                  title: Text(
-                    "اليوم الرابع حوش اللى وقع منك ذاتيا ",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        "١ - يوسف يصبح الرجل الثانى فى مصر ( تك 41 : 25 - 46 )",
-                        textAlign: TextAlign.right,
-                      ),
-                      Text(
-                        "٢ - يهوديت تخلص شعب اسرائيل (يهو 13 : 1 - 22 )",
-                        textAlign: TextAlign.right,
-                      ),
-                    ],
-                  ),
+              ),
+              InkWell(
+                onTap: () {
+                  Get.toNamed(GetPages.kDerasetketab3);
+                },
+                child: const CardDerasetketab(
+                  day_title: "اليوم الثالث حوش اللى وقع منك اخلاقيا ",
+                  subject1:
+                      "١ - خطيئة داود مع بثشبع و قتل اوريا الحثى (2صم  11 : 1 - 18 )",
+                  subject2:
+                      "٢ ـ  سليمان ( انحرافه نحو الوثنيَّة) ( 1مل 11 : 1 - 12 )",
                 ),
-              )),
+              ),
+              InkWell(
+                onTap: () {
+                  Get.toNamed(GetPages.kDerasetketab4);
+                },
+                child: const CardDerasetketab(
+                  day_title: "اليوم الرابع حوش اللى وقع منك ذاتيا ",
+                  subject1:
+                      "١ - يوسف يصبح الرجل الثانى فى مصر ( تك 41 : 25 - 46 )",
+                  subject2: "٢ - يهوديت تخلص شعب اسرائيل (يهو 13 : 1 - 22 )",
+                ),
+              ),
             ],
           )
         ],
@@ -133,3 +90,7 @@ class Derasetketab extends StatelessWidget {
     );
   }
 }
+
+
+
+//Color.fromARGB(255, 255, 174, 75)

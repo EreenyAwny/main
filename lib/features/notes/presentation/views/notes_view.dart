@@ -43,6 +43,7 @@ class _NotesView extends State<NotesView> {
               itemBuilder: (context, i) {
                 return InkWell(
                   onTap: () {
+                    note_title = note[i].namee!;
                     note_detail = note[i].note!;
                     Get.toNamed(GetPages.kNotedetails);
                   },
@@ -59,6 +60,7 @@ class _NotesView extends State<NotesView> {
                         BlocProvider.of<NotesCubit>(context).fechAllNotes();
                       },
                       btnOkOnPress: () {
+                        note_title = note[i].namee!;
                         note_detail = note[i].note!;
                         note_toChange = note[i];
                         Get.toNamed(GetPages.kEditNoteView);
@@ -68,10 +70,18 @@ class _NotesView extends State<NotesView> {
                   child: Card(
                     color: const Color.fromARGB(255, 234, 225, 225),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "${note[i].note}",
+                          "العنوان : ${note[i].namee}",
+                          textAlign: TextAlign.right,
                           style: const TextStyle(fontSize: 24),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          "الموضوع: ${note[i].note}",
+                          style: const TextStyle(fontSize: 18),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),

@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:hive/hive.dart';
 import 'package:mutamaruna/core/constants.dart';
 import 'package:mutamaruna/core/helper/get_pages.dart';
-import 'package:mutamaruna/core/hive_api.dart';
 import 'package:mutamaruna/core/models/note_model/note_model.dart';
 import 'package:mutamaruna/features/notes/presentation/manager/add_note_cubit/add_note_cubit.dart';
 import 'package:mutamaruna/features/notes/presentation/manager/add_note_cubit/add_note_state.dart';
@@ -21,6 +19,7 @@ class _AddNoteView extends State<AddNoteView> {
   @override
   Widget build(BuildContext context) {
     String? info;
+    String? title;
     bool isloading = false;
     GlobalKey<FormState> formState = GlobalKey();
 
@@ -69,6 +68,33 @@ class _AddNoteView extends State<AddNoteView> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
+                                      margin: const EdgeInsets.only(bottom: 10),
+                                      padding: const EdgeInsets.all(0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30)),
+                                            fillColor: const Color.fromARGB(
+                                                255, 231, 226, 226),
+                                            filled: true,
+                                            hintText: "اكتب العنوان",
+                                            hintStyle: const TextStyle(
+                                              fontWeight: FontWeight.w300,
+                                            )),
+                                        onSaved: (Value) {
+                                          title = Value;
+                                        },
+                                        validator: (value) {
+                                          if (value == null) {
+                                            return "please enter your note";
+                                          } else {
+                                            return null;
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                    Container(
                                       padding: const EdgeInsets.all(0),
                                       child: TextFormField(
                                         maxLines: 12,
@@ -102,10 +128,8 @@ class _AddNoteView extends State<AddNoteView> {
                           onPressed: () {
                             if (formState.currentState!.validate()) {
                               formState.currentState!.save();
-                              var notemodel = NoteModel(
-                                  namee: Hive.box(HiveApi.configrationBox)
-                                      .get(HiveApi.userNamekey),
-                                  note: info);
+                              var notemodel =
+                                  NoteModel(namee: title, note: info);
                               BlocProvider.of<AddnoteCubit>(context)
                                   .addnote(notemodel);
                               Get.toNamed(GetPages.kNotepage);

@@ -5,3 +5,4 @@ Color mainColor = Colors.blue;
 const String slogan = "حوش اللي وقع منك";
 String note_detail = "";
 NoteModel? note_toChange;
+String note_title = "";
