@@ -29,7 +29,9 @@ dependencies:
   hive_flutter: ^1.1.0
   image_picker: ^1.1.2
   lottie: ^3.1.2
+  multi_dropdown: ^3.0.1
   quickalert: ^1.1.0
+  textfield_tags: ^3.0.1
   toggle_switch: ^2.3.0
 
 dev_dependencies:

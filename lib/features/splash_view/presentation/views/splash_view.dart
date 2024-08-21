@@ -1,11 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:hive/hive.dart';
 import 'package:mutamaruna/core/constants.dart';
+import 'package:mutamaruna/core/functions/check_internet.dart';
 import 'package:mutamaruna/core/helper/get_pages.dart';
 import 'package:mutamaruna/core/hive_api.dart';
+import 'package:mutamaruna/features/magmoat/data/models/groups_model/groups_model.dart';
 
 class SplashView extends StatelessWidget {
   const SplashView({super.key});
@@ -62,9 +65,29 @@ class SplashView extends StatelessWidget {
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(mainColor),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   EasyLoading.show(status: 'loading...');
                   Box box = Hive.box(HiveApi.configrationBox);
+                  String? mNum = box.get(HiveApi.mNum);
+                  bool isconnected = await checkInternet();
+                  if (mNum != null && isconnected) {
+                    EasyLoading.dismiss();
+                    EasyLoading.show(status: 'loading groups data...');
+                    // getting data of magmoat and storing them in hive
+                    List<GroupsData> groups = [];
+                    FirebaseFirestore.instance
+                        .collection("motamerat")
+                        .doc(mNum)
+                        .collection("groups")
+                        .get()
+                        .then((value) {
+                      for (var element in value.docs) {
+                        groups.add(GroupsData.fromJson(element.data()));
+                      }
+                    });
+                    box.put(HiveApi.groupsKey, groups);
+                  }
+
                   box.get(HiveApi.userNamekey) == null
                       ? Get.offNamed(GetPages.kAuth)
                       : Get.offNamed(GetPages.kHomeView);

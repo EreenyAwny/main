@@ -20,19 +20,25 @@ class GroupsDataAdapter extends TypeAdapter<GroupsData> {
       name: fields[0] as String?,
       imageUrl: fields[1] as String?,
       grade: fields[2] as int?,
-    );
+    )
+      ..members = (fields[3] as List?)?.cast<String>()
+      ..id = fields[4] as String?;
   }
 
   @override
   void write(BinaryWriter writer, GroupsData obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
       ..write(obj.imageUrl)
       ..writeByte(2)
-      ..write(obj.grade);
+      ..write(obj.grade)
+      ..writeByte(3)
+      ..write(obj.members)
+      ..writeByte(4)
+      ..write(obj.id);
   }
 
   @override

@@ -14,6 +14,10 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String name = Hive.box(HiveApi.configrationBox).get(HiveApi.userNamekey);
+    String mNum = Hive.box(HiveApi.configrationBox).get(HiveApi.mNum) == "first"
+        ? "المؤتمر الاول"
+        : "المؤتمر الثاني";
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -27,21 +31,53 @@ class HomeView extends StatelessWidget {
         children: [
           const SizedBox(height: 10),
           Container(
+            width: MediaQuery.of(context).size.width * 0.9,
             decoration: BoxDecoration(
-              color: mainColor.withOpacity(0.5),
+              color: mainColor,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.3),
+                  blurRadius: 5,
+                  spreadRadius: 2,
+                  offset: const Offset(0, 3),
+                ),
+              ],
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Text(
-              "أهلاً: ${Hive.box(HiveApi.configrationBox).get(HiveApi.userNamekey)}",
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "أهلاً: $name",
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                Text(
+                  "المؤتمر: $mNum",
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                const Text(
+                  "المجموعة: ",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               child: GridView(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -56,11 +92,6 @@ class HomeView extends StatelessWidget {
                     },
                     child: const HomeBlocElement(title: "المجموعات"),
                   ),
-                  InkWell(
-                      onTap: () {
-                        Get.toNamed(GetPages.kDaragat2);
-                      },
-                      child: const HomeBlocElement(title: "درجاتك يا بيه")),
                   InkWell(
                       onTap: () {
                         Get.toNamed(GetPages.kElpernameg);
