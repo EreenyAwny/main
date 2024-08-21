@@ -1,13 +1,17 @@
 import 'package:get/get.dart';
 import 'package:mutamaruna/categories.dart/derasetketab/derasetketab.dart';
 import 'package:mutamaruna/categories.dart/derasetketab/derasetketab1.dart';
+import 'package:mutamaruna/categories.dart/derasetketab/derasetketab2.dart';
+import 'package:mutamaruna/categories.dart/derasetketab/derasetketab3.dart';
+import 'package:mutamaruna/categories.dart/derasetketab/derasetketan4.dart';
 import 'package:mutamaruna/categories.dart/elpernameg.dart';
-import 'package:mutamaruna/features/magmoat/presentation/views/magmo3at.dart';
 import 'package:mutamaruna/features/add_groups/presentation/views/add_groups_view.dart';
 import 'package:mutamaruna/features/auth_view/presentation/views/auth_view.dart';
 import 'package:mutamaruna/features/home/presentation/view/home_view.dart';
+import 'package:mutamaruna/features/magmoat/presentation/views/magmo3at.dart';
 import 'package:mutamaruna/features/magmoat/presentation/views/widget/add_group_members_view.dart';
 import 'package:mutamaruna/features/notes/presentation/views/add_note_view.dart';
+import 'package:mutamaruna/features/notes/presentation/views/edit_note_view.dart';
 import 'package:mutamaruna/features/notes/presentation/views/notes_view.dart';
 import 'package:mutamaruna/features/notes/presentation/views/widgets/notedetails.dart';
 import 'package:mutamaruna/features/splash_view/presentation/views/splash_view.dart';
@@ -25,6 +29,10 @@ abstract class GetPages {
   static const String kAddGroups = "/kAddGroups";
   static const String kSplashView = "/kSplashView";
   static const String kAuth = "/kAuth";
+  static const String kEditNoteView = "/kEditNoteView";
+  static const String kDerasetketab2 = "/kDerasetketab2";
+  static const String kDerasetketab3 = "/kDerasetketab3";
+  static const String kDerasetketab4 = "/kDerasetketab4";
   static String kaddGroupMembers = "/kaddGroupMembers";
 
   static List<GetPage<dynamic>> getPages = [
@@ -81,6 +89,26 @@ abstract class GetPages {
     GetPage(
       name: kAuth,
       page: () => const AuthView(),
+      transition: ktransition,
+    ),
+    GetPage(
+      name: kEditNoteView,
+      page: () => const EditNoteView(),
+      transition: ktransition,
+    ),
+    GetPage(
+      name: kDerasetketab2,
+      page: () => const Derasetketab2(),
+      transition: ktransition,
+    ),
+    GetPage(
+      name: kDerasetketab3,
+      page: () => const Derasetketab3(),
+      transition: ktransition,
+    ),
+    GetPage(
+      name: kDerasetketab4,
+      page: () => const Derasetketab4(),
       transition: ktransition,
     ),
     GetPage(

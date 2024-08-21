@@ -1,34 +1,44 @@
-import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:hive/hive.dart';
+import 'package:mutamaruna/core/hive_api.dart';
+import 'package:mutamaruna/core/models/note_model/note_model.dart';
 import 'package:mutamaruna/features/notes/presentation/manager/add_note_cubit/add_note_state.dart';
-import 'package:mutamaruna/core/widgets/User.dart';
-import 'package:path/path.dart';
 
 class AddnoteCubit extends Cubit<AddnotesState> {
   AddnoteCubit() : super(InitialState());
-  File? file;
-  CollectionReference notes = FirebaseFirestore.instance.collection('Notes');
+  addnote(NoteModel note) async {
+    emit(Addloading());
+    try {
+      var notesbox = Hive.box<NoteModel>(HiveApi.knoteBox);
+      await notesbox.add(note);
+      emit(AddSuccess());
+    } catch (e) {
+      emit(Addfailure(erorr: e.toString()));
+    }
+  }
+
+  /* CollectionReference notes = FirebaseFirestore.instance
+      .collection('motamerat')
+      .doc(Hive.box(HiveApi.configrationBox).get(HiveApi.mNum))
+      .collection("notes");
   Future<void> addnote({required String info}) async {
     emit(Addloading());
 
     try {
       await notes.add({
-        "note": info,
-        "image": uri ?? "none",
-        'id': FirebaseAuth.instance.currentUser!.uid
+        "name": Hive.box(HiveApi.configrationBox).get(HiveApi.userNamekey),
+        "note": info
       });
       emit(AddSuccess());
     } catch (e) {
       emit(Addfailure(erorr: "somthing went wrong"));
     }
-  }
+  }*/
+}
 
-  Future<void> putimage() async {
+//,'id':FirebaseAuth.instance.currentUser!.uid
+
+/*Future<void> putimage() async {
     uri = "";
     try {
       final ImagePicker picker = ImagePicker();
@@ -47,7 +57,4 @@ class AddnoteCubit extends Cubit<AddnotesState> {
     } catch (ee) {
       emit(Addfailure(erorr: "somthing went wrong"));
     }
-  }
-}
-
-//,'id':FirebaseAuth.instance.currentUser!.uid
+  }*/

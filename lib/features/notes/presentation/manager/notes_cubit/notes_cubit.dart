@@ -1,18 +1,33 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:mutamaruna/core/hive_api.dart';
+import 'package:mutamaruna/core/models/note_model/note_model.dart';
 import 'package:mutamaruna/features/notes/presentation/manager/notes_cubit/notes_states.dart';
-import 'package:mutamaruna/core/widgets/User.dart';
 
 class NotesCubit extends Cubit<NotesStates> {
-  NotesCubit() : super(initialstate());
-  Future<void> getnotes() async {
+  NotesCubit() : super(Initialstate());
+  List<NoteModel>? notes;
+  fechAllNotes() {
+    var notesbox = Hive.box<NoteModel>(HiveApi.knoteBox);
+    notes = notesbox.values.toList();
+    emit(StateSuccess());
+  }
+
+  deleteNote(note) {
+    note.delete();
+  }
+/*  Future<void> getnotes() async {
+    
     data = [];
     emit(loadingstate());
     try {
       QuerySnapshot allData = await FirebaseFirestore.instance
-          .collection('Notes')
-          .where('id', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .collection('motamerat')
+          .doc(Hive.box(HiveApi.configrationBox).get(HiveApi.mNum))
+          .collection("notes")
+          .where('name',
+              isEqualTo:
+                  Hive.box(HiveApi.configrationBox).get(HiveApi.userNamekey))
           .get();
       data.addAll(allData.docs);
       print("llllllllllllllllllllllllllllllll  ${data.length}");
@@ -24,7 +39,10 @@ class NotesCubit extends Cubit<NotesStates> {
     }
   }
 
-  CollectionReference Category = FirebaseFirestore.instance.collection('Notes');
+  CollectionReference Category = FirebaseFirestore.instance
+      .collection('motamerat')
+      .doc(Hive.box(HiveApi.configrationBox).get(HiveApi.mNum))
+      .collection("notes");
   Future<void> deletedata({required String pass}) {
     emit(loadingstate());
     return Category.doc(pass).delete().then((value) {
@@ -34,5 +52,5 @@ class NotesCubit extends Cubit<NotesStates> {
       print("Failed to delete user: $error");
       emit(failureState());
     });
-  }
+  }*/
 }
