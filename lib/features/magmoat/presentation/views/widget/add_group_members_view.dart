@@ -1,12 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:hive/hive.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
+import 'package:mutamaruna/core/constants.dart';
 import 'package:mutamaruna/core/hive_api.dart';
+import 'package:mutamaruna/core/widgets/app_leading.dart';
+import 'package:mutamaruna/features/magmoat/data/models/groups_model/groups_model.dart';
+import 'package:mutamaruna/features/magmoat/presentation/manager/edit_groups_cubit/edit_groups_cubit.dart';
+import 'package:mutamaruna/features/magmoat/presentation/views/widget/grade_edit.dart';
 
 class AddGroupMembersView extends StatefulWidget {
   const AddGroupMembersView({super.key});
@@ -34,11 +40,20 @@ class _AddGroupMembersViewState extends State<AddGroupMembersView> {
   @override
   Widget build(BuildContext context) {
     List<DropdownItem<User>> items = Get.arguments['items'];
-    String id = Get.arguments['id'];
-    return Scaffold(
+    GroupsData groupData = Get.arguments['groupData'];
+    return BlocProvider(
+      create: (context) => EditGroupsCubit(),
+      child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('اضافة الاعضاء'),
+          leading: const AppLeading(
+            kcolor: Colors.black,
+          ),
+          centerTitle: true,
+          title: const Text(
+            'التعديل',
+            style: TextStyle(fontSize: 30),
+          ),
         ),
         body: SafeArea(
           child: Padding(
@@ -51,9 +66,17 @@ class _AddGroupMembersViewState extends State<AddGroupMembersView> {
                 child: Form(
                   key: _formKey,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
+                      Text(
+                        "تــعـديل الاعضـاء",
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: mainColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       const SizedBox(
                         height: 4,
                       ),
@@ -113,8 +136,8 @@ class _AddGroupMembersViewState extends State<AddGroupMembersView> {
                         },
                       ),
                       const SizedBox(height: 12),
-                      Wrap(
-                        spacing: 8,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           ElevatedButton(
                             onPressed: () {
@@ -133,7 +156,7 @@ class _AddGroupMembersViewState extends State<AddGroupMembersView> {
                                     .collection("motamerat")
                                     .doc(mNum)
                                     .collection('groups')
-                                    .doc(id)
+                                    .doc(groupData.id)
                                     .update({
                                   "members": names,
                                 });
@@ -141,22 +164,47 @@ class _AddGroupMembersViewState extends State<AddGroupMembersView> {
                                 EasyLoading.showSuccess('Added successfully');
                               }
                             },
-                            child: const Text('Submit'),
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  WidgetStatePropertyAll(mainColor),
+                            ),
+                            child: const Text(
+                              'Submit',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
                           ),
                           ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  WidgetStatePropertyAll(mainColor),
+                            ),
                             onPressed: () {
                               controller.clearAll();
                             },
-                            child: const Text('Unselect All'),
+                            child: const Text(
+                              'Unselect All',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
                           ),
                         ],
-                      )
+                      ),
+                      EditGroupsSection(
+                        groupData: groupData,
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

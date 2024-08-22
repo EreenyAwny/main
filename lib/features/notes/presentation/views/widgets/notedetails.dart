@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mutamaruna/core/constants.dart';
+import 'package:mutamaruna/core/widgets/app_leading.dart';
 
 class Notedetails extends StatelessWidget {
   const Notedetails({super.key});
@@ -8,6 +9,7 @@ class Notedetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: const AppLeading(),
         title: Text(
           note_title,
           style: const TextStyle(color: Colors.white),
@@ -21,7 +23,7 @@ class Notedetails extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: Text(
               note_detail,
-              style: const TextStyle(fontSize: 28),
+              style: const TextStyle(fontSize: 23),
             ),
           ),
         ],

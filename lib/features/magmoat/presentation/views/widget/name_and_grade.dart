@@ -20,14 +20,14 @@ class NameAndGrade extends StatelessWidget {
           Text(
             "الاسم: ${groups[index].name!}",
             style: const TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
           Text(
             "الدرجة: ${groups[index].grade ?? 0}",
             style: const TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),

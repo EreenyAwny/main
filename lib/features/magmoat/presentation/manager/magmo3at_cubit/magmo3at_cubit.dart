@@ -1,8 +1,7 @@
 import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as FirebaseAuth;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -11,16 +10,21 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
+import 'package:multi_dropdown/multi_dropdown.dart';
 import 'package:mutamaruna/core/constants.dart';
 import 'package:mutamaruna/core/functions/check_internet.dart';
+import 'package:mutamaruna/core/helper/get_pages.dart';
 import 'package:mutamaruna/core/hive_api.dart';
 import 'package:mutamaruna/features/magmoat/data/models/groups_model/groups_model.dart';
+import 'package:mutamaruna/features/magmoat/presentation/views/widget/add_group_members_view.dart';
 
 part 'magmo3at_state.dart';
 
 class Magmo3atCubit extends Cubit<Magmo3atState> {
-  Magmo3atCubit() : super(Magmo3atInitial());
+  bool editMode = false;
   bool kIsconected = false;
+
+  Magmo3atCubit() : super(Magmo3atInitial());
 
   init() async {
     // check internet
@@ -56,9 +60,35 @@ class Magmo3atCubit extends Cubit<Magmo3atState> {
     }
   }
 
-  Future<UserCredential> signInAnonymously() async {
-    UserCredential userCredential =
-        await FirebaseAuth.instance.signInAnonymously();
+  goToEditPage({required List<GroupsData> groups, required int index}) {
+    EasyLoading.show(status: "loading");
+    Box box = Hive.box(HiveApi.configrationBox);
+    List<String>? allnames = box.get(HiveApi.allUserskey) as List<String>?;
+    allnames ??= [];
+
+    // getting stored members names from hive
+    List<String> members = groups[index].members!;
+
+    List<DropdownItem<User>> items = List<DropdownItem<User>>.generate(
+      allnames.length,
+      (index) {
+        return DropdownItem(
+          label: allnames![index],
+          value: User(name: allnames[index], id: index + 1),
+          selected: members.contains(allnames[index]),
+        );
+      },
+    );
+    EasyLoading.dismiss();
+    Get.offNamed(GetPages.kaddGroupMembers, arguments: {
+      "items": items,
+      'groupData': groups[index],
+    });
+  }
+
+  Future<FirebaseAuth.UserCredential> signInAnonymously() async {
+    FirebaseAuth.UserCredential userCredential =
+        await FirebaseAuth.FirebaseAuth.instance.signInAnonymously();
     return userCredential;
   }
 
@@ -88,8 +118,8 @@ class Magmo3atCubit extends Cubit<Magmo3atState> {
       EasyLoading.dismiss();
 
       // delete user
-      await FirebaseAuth.instance.currentUser!.delete();
-      await FirebaseAuth.instance.signOut();
+      await FirebaseAuth.FirebaseAuth.instance.currentUser!.delete();
+      await FirebaseAuth.FirebaseAuth.instance.signOut();
     }
 
     // add group

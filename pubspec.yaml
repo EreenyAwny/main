@@ -23,6 +23,8 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.1.6
   flutter_easyloading: ^3.0.5
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.4.1
   get: ^4.6.6
   google_fonts: ^6.2.1
   hive: ^2.2.3
@@ -31,6 +33,7 @@ dependencies:
   lottie: ^3.1.2
   multi_dropdown: ^3.0.1
   quickalert: ^1.1.0
+  rename: ^3.0.2
   textfield_tags: ^3.0.1
   toggle_switch: ^2.3.0
 
@@ -41,6 +44,32 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   hive_generator: ^2.0.1
+
+flutter_launcher_icons:
+  android: "logo"
+  ios: true
+  image_path: "images/logo.png"
+  min_sdk_android: 21
+
+flutter_native_splash:
+  # Customize the parameters below, and run the following command in the terminal:
+  # dart run flutter_native_splash:create
+  # To restore Flutter's default white splash screen, run the following command in the terminal:
+  # dart run flutter_native_splash:remove
+  color: "#ffffff"
+  color_dark: "#ffffff"
+  image: images/splash_logo.png
+  image_dark: images/splash_logo.png
+  #background_image: "assets/background.png"
+  android_12:
+    image: images/splash_logo.png
+    image_dark: images/splash_logo.png
+    color: "#ffffff"
+    color_dark: "#ffffff"
+    #background_image: "assets/background.png"
+  android_gravity: fill
+  ios_content_mode: scaleAspectFill
+  fullscreen: true
 
 flutter:
   uses-material-design: true

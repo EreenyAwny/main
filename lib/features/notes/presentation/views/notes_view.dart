@@ -6,6 +6,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:mutamaruna/core/constants.dart';
 import 'package:mutamaruna/core/helper/get_pages.dart';
 import 'package:mutamaruna/core/models/note_model/note_model.dart';
+import 'package:mutamaruna/core/widgets/app_leading.dart';
 import 'package:mutamaruna/features/notes/presentation/manager/notes_cubit/notes_cubit.dart';
 import 'package:mutamaruna/features/notes/presentation/manager/notes_cubit/notes_states.dart';
 
@@ -31,6 +32,7 @@ class _NotesView extends State<NotesView> {
 
         return Scaffold(
           appBar: AppBar(
+            leading: const AppLeading(),
             title: const Text(
               "ملاحظاتك 📝",
               style: TextStyle(color: Colors.white),
@@ -41,53 +43,75 @@ class _NotesView extends State<NotesView> {
               padding: const EdgeInsets.all(10),
               itemCount: note.length,
               itemBuilder: (context, i) {
-                return InkWell(
-                  onTap: () {
-                    note_title = note[i].namee!;
-                    note_detail = note[i].note!;
-                    Get.toNamed(GetPages.kNotedetails);
-                  },
-                  onLongPress: () {
-                    AwesomeDialog(
-                      context: context,
-                      animType: AnimType.rightSlide,
-                      desc: "what do you want",
-                      btnOkText: "تعديل",
-                      btnCancelText: "مسح",
-                      btnCancelOnPress: () {
-                        BlocProvider.of<NotesCubit>(context)
-                            .deleteNote(note[i]);
-                        BlocProvider.of<NotesCubit>(context).fechAllNotes();
-                      },
-                      btnOkOnPress: () {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    InkWell(
+                      onTap: () {
                         note_title = note[i].namee!;
                         note_detail = note[i].note!;
-                        note_toChange = note[i];
-                        Get.toNamed(GetPages.kEditNoteView);
+                        Get.toNamed(GetPages.kNotedetails);
                       },
-                    ).show();
-                  },
-                  child: Card(
-                    color: const Color.fromARGB(255, 234, 225, 225),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "العنوان : ${note[i].namee}",
-                          textAlign: TextAlign.right,
-                          style: const TextStyle(fontSize: 24),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                      onLongPress: () {
+                        AwesomeDialog(
+                          context: context,
+                          animType: AnimType.rightSlide,
+                          desc: "what do you want",
+                          btnOkText: "تعديل",
+                          btnCancelText: "مسح",
+                          btnCancelOnPress: () {
+                            BlocProvider.of<NotesCubit>(context)
+                                .deleteNote(note[i]);
+                            BlocProvider.of<NotesCubit>(context).fechAllNotes();
+                          },
+                          btnOkOnPress: () {
+                            note_title = note[i].namee!;
+                            note_detail = note[i].note!;
+                            note_toChange = note[i];
+                            Get.toNamed(GetPages.kEditNoteView);
+                          },
+                        ).show();
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: const [
+                            BoxShadow(
+                              blurRadius: 5,
+                              offset: Offset(1, 1),
+                              blurStyle: BlurStyle.normal,
+                              color: Colors.black12,
+                              spreadRadius: 2,
+                            )
+                          ],
                         ),
-                        Text(
-                          "الموضوع: ${note[i].note}",
-                          style: const TextStyle(fontSize: 18),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "العنوان : ${note[i].namee}",
+                              textAlign: TextAlign.right,
+                              style: const TextStyle(fontSize: 24),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              "الموضوع: ${note[i].note}",
+                              style: const TextStyle(fontSize: 18),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                    const SizedBox(
+                      height: 10,
+                    )
+                  ],
                 );
               }),
           floatingActionButton: FloatingActionButton(

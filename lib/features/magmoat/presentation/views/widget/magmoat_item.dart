@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mutamaruna/features/magmoat/data/models/groups_model/groups_model.dart';
+import 'package:mutamaruna/features/magmoat/presentation/manager/magmo3at_cubit/magmo3at_cubit.dart';
 import 'package:mutamaruna/features/magmoat/presentation/views/widget/group_image.dart';
 import 'package:mutamaruna/features/magmoat/presentation/views/widget/group_num_and_add_items.dart';
 import 'package:mutamaruna/features/magmoat/presentation/views/widget/name_and_grade.dart';
@@ -10,7 +13,7 @@ class MagmoatItem extends StatelessWidget {
     required this.index,
   });
 
-  final List groups;
+  final List<GroupsData> groups;
   final int index;
 
   @override
@@ -79,17 +82,21 @@ class MagmoatItem extends StatelessWidget {
           ],
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GroupImage(groups: groups, index: index),
-            const SizedBox(height: 10),
-            NameAndGrade(groups: groups, index: index),
-            NumAndAddItems(
-              groups: groups,
-              index: index,
-            ),
-          ],
+        child: BlocBuilder<Magmo3atCubit, Magmo3atState>(
+          builder: (context, state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GroupImage(groups: groups, index: index),
+                const SizedBox(height: 10),
+                NameAndGrade(groups: groups, index: index),
+                NumAndAddItems(
+                  groups: groups,
+                  index: index,
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

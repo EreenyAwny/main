@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 class AppLeading extends StatelessWidget {
   const AppLeading({
     super.key,
+    this.kcolor,
   });
+
+  final Color? kcolor;
 
   @override
   Widget build(BuildContext context) {
@@ -11,9 +14,9 @@ class AppLeading extends StatelessWidget {
       onPressed: () {
         Navigator.pop(context);
       },
-      icon: const Icon(
+      icon: Icon(
         Icons.arrow_back_ios,
-        color: Colors.white,
+        color: kcolor ?? Colors.white,
       ),
     );
   }

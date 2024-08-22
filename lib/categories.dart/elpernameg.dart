@@ -21,42 +21,36 @@ class _Elpernameg extends State<Elpernameg> {
         backgroundColor: const Color.fromARGB(255, 49, 33, 109),
       ),
       body: ListView(
-        children: [
-          Container2(
-              day1: "اليوم الاول",
-              photo1: "images/Screenshot (172).png",
-              color1: Colors.white),
-          Container2(
-              day1: "اليوم الثانى",
-              photo1: "images/Screenshot (177).png",
-              color1: Colors.blue),
-          Container2(
-              day1: "اليوم الثالث",
-              photo1: "images/Screenshot (172).png",
-              color1: Colors.white),
-          Container2(
-              day1: "اليوم الرابع",
-              photo1: "images/Screenshot (177).png",
-              color1: Colors.blue),
+        children: const [
+          Item(
+              day: "اليوم الاول",
+              photo: "images/Screenshot (172).png",
+              color: Colors.white),
+          Item(
+              day: "اليوم الثانى",
+              photo: "images/Screenshot (177).png",
+              color: Colors.blue),
+          Item(
+              day: "اليوم الثالث",
+              photo: "images/Screenshot (172).png",
+              color: Colors.white),
+          Item(
+              day: "اليوم الرابع",
+              photo: "images/Screenshot (177).png",
+              color: Colors.blue),
         ],
       ),
     );
   }
 }
 
-class Container2 extends StatelessWidget {
-  String? day;
-  String? photo;
-  Color? color;
-  Container2(
-      {super.key,
-      required String day1,
-      required String photo1,
-      required Color color1}) {
-    day = day1;
-    photo = photo1;
-    color = color1;
-  }
+class Item extends StatelessWidget {
+  const Item({super.key, this.day, this.photo, this.color});
+
+  final String? day;
+  final String? photo;
+  final Color? color;
+
   @override
   Widget build(BuildContext context) {
     return Container(
