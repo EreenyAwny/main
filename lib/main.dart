@@ -6,6 +6,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mutamaruna/core/constants.dart';
+import 'package:mutamaruna/core/functions/send_notification.dart';
 import 'package:mutamaruna/core/helper/get_pages.dart';
 import 'package:mutamaruna/core/hive_api.dart';
 import 'package:mutamaruna/features/notes/presentation/manager/notes_cubit/notes_cubit.dart';
@@ -20,6 +21,7 @@ void main() async {
   HiveApi hiveApi = HiveApi();
   hiveApi.openBoxes();
   hiveApi.init();
+  Notifications().subscribeToGeneralTopic();
   runApp(const MyApp());
 }
 

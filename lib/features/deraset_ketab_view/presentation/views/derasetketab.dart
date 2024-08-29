@@ -90,7 +90,3 @@ class Derasetketab extends StatelessWidget {
     );
   }
 }
-
-
-
-//Color.fromARGB(255, 255, 174, 75)

@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:mutamaruna/categories.dart/derasetketab/derasetketab.dart';
 import 'package:mutamaruna/categories.dart/derasetketab/derasetketab1.dart';
 import 'package:mutamaruna/categories.dart/derasetketab/derasetketab2.dart';
 import 'package:mutamaruna/categories.dart/derasetketab/derasetketab3.dart';
-import 'package:mutamaruna/categories.dart/derasetketab/derasetketan4.dart';
-import 'package:mutamaruna/categories.dart/elpernameg.dart';
+import 'package:mutamaruna/features/deraset_ketab_view/presentation/views/derasetketab.dart';
+import 'package:mutamaruna/features/deraset_ketab_view/presentation/views/derasetketan4.dart';
+import 'package:mutamaruna/features/el_bernameg_view/presentation/views/elpernameg.dart';
 import 'package:mutamaruna/features/add_groups/presentation/views/add_groups_view.dart';
 import 'package:mutamaruna/features/auth_view/presentation/views/auth_view.dart';
 import 'package:mutamaruna/features/home/presentation/view/home_view.dart';
