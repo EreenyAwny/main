@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
-import 'package:mutamaruna/features/magmoat/data/models/groups_model/groups_model.dart';
 import 'package:mutamaruna/core/models/note_model/note_model.dart';
+import 'package:mutamaruna/features/magmoat/data/models/groups_model/groups_model.dart';
 
 class HiveApi {
   static String grades = "grades";

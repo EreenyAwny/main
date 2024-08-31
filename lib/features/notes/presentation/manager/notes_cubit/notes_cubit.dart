@@ -7,12 +7,14 @@ import 'package:mutamaruna/features/notes/presentation/manager/notes_cubit/notes
 class NotesCubit extends Cubit<NotesStates> {
   NotesCubit() : super(Initialstate());
   List<NoteModel>? notes;
+  //get notes from hive
   fechAllNotes() {
     var notesbox = Hive.box<NoteModel>(HiveApi.knoteBox);
     notes = notesbox.values.toList();
     emit(StateSuccess());
   }
 
+//delete note from hive
   deleteNote(note) {
     note.delete();
   }

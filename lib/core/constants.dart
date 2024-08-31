@@ -13,6 +13,7 @@ String note_detail = "";
 NoteModel? note_toChange;
 String note_title = "";
 const String password = "01126198158";
+String post_image = "";
 
 const String kNotificationPublicTopic = "public";
 

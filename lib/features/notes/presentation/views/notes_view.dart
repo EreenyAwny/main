@@ -40,89 +40,81 @@ class _NotesView extends State<NotesView> {
             ),
             backgroundColor: mainColor,
           ),
-          body: Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25), topRight: Radius.circular(25)),
-              color: Colors.white,
-            ),
-            child: ListView.builder(
-                padding: const EdgeInsets.all(10),
-                itemCount: note.length,
-                itemBuilder: (context, i) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          note_title = note[i].namee!;
-                          note_detail = note[i].note!;
-                          Get.toNamed(GetPages.kNotedetails);
-                        },
-                        onLongPress: () {
-                          AwesomeDialog(
-                            context: context,
-                            animType: AnimType.rightSlide,
-                            desc: "what do you want",
-                            btnOkText: "تعديل",
-                            btnCancelText: "مسح",
-                            btnCancelOnPress: () {
-                              BlocProvider.of<NotesCubit>(context)
-                                  .deleteNote(note[i]);
-                              BlocProvider.of<NotesCubit>(context)
-                                  .fechAllNotes();
-                            },
-                            btnOkOnPress: () {
-                              note_title = note[i].namee!;
-                              note_detail = note[i].note!;
-                              note_toChange = note[i];
-                              Get.toNamed(GetPages.kEditNoteView);
-                            },
-                          ).show();
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                            boxShadow: const [
-                              BoxShadow(
-                                blurRadius: 5,
-                                offset: Offset(1, 1),
-                                blurStyle: BlurStyle.normal,
-                                color: Colors.black12,
-                                spreadRadius: 2,
-                              )
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "العنوان : ${note[i].namee}",
-                                textAlign: TextAlign.right,
-                                style: const TextStyle(fontSize: 24),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              Text(
-                                "الموضوع: ${note[i].note}",
-                                style: const TextStyle(fontSize: 18),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
+          body: ListView.builder(
+              padding: const EdgeInsets.all(10),
+              itemCount: note.length,
+              itemBuilder: (context, i) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        note_title = note[i].namee!;
+                        note_detail = note[i].note!;
+                        Get.toNamed(GetPages.kNotedetails);
+                      },
+                      onLongPress: () {
+                        AwesomeDialog(
+                          context: context,
+                          animType: AnimType.rightSlide,
+                          desc: "what do you want",
+                          btnOkText: "تعديل",
+                          btnCancelText: "مسح",
+                          btnCancelOnPress: () {
+                            BlocProvider.of<NotesCubit>(context)
+                                .deleteNote(note[i]);
+                            BlocProvider.of<NotesCubit>(context).fechAllNotes();
+                          },
+                          btnOkOnPress: () {
+                            note_title = note[i].namee!;
+                            note_detail = note[i].note!;
+                            note_toChange = note[i];
+                            Get.toNamed(GetPages.kEditNoteView);
+                          },
+                        ).show();
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: const [
+                            BoxShadow(
+                              blurRadius: 5,
+                              offset: Offset(1, 1),
+                              blurStyle: BlurStyle.normal,
+                              color: Colors.black12,
+                              spreadRadius: 2,
+                            )
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "العنوان : ${note[i].namee}",
+                              textAlign: TextAlign.right,
+                              style: const TextStyle(fontSize: 24),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              "الموضوع: ${note[i].note}",
+                              style: const TextStyle(fontSize: 18),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      )
-                    ],
-                  );
-                }),
-          ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    )
+                  ],
+                );
+              }),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               Get.toNamed(GetPages.kAddnotes);

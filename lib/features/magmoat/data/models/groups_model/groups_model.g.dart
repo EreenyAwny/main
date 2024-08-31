@@ -20,9 +20,9 @@ class GroupsDataAdapter extends TypeAdapter<GroupsData> {
       name: fields[0] as String?,
       imageUrl: fields[1] as String?,
       grade: fields[2] as int?,
-    )
-      ..members = (fields[3] as List?)?.cast<String>()
-      ..id = fields[4] as String?;
+      members: (fields[3] as List?)?.cast<String>(),
+      id: fields[4] as String?,
+    );
   }
 
   @override
