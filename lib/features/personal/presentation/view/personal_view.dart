@@ -4,7 +4,6 @@ import 'package:hive/hive.dart';
 import 'package:mutamaruna/core/constants.dart';
 import 'package:mutamaruna/core/hive_api.dart';
 import 'package:mutamaruna/features/home/presentation/manager/home_cubit/home_cubit.dart';
-import 'package:mutamaruna/features/personal/presentation/view/widgets/data_card.dart';
 
 class PersonalView extends StatelessWidget {
   const PersonalView({super.key});
@@ -40,7 +39,64 @@ class PersonalView extends StatelessWidget {
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: DataCard(name: name, mNum: mNum),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      "أهلاً: $name",
+                      style: const TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      mNum,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    BlocBuilder<HomeCubit, HomeState>(
+                      builder: (context, state) {
+                        if (state is HomeGroupNameFound) {
+                          return Text(
+                            state.myGroup,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[600],
+                            ),
+                          );
+                        } else if (state is HomeGroupNameNotFound) {
+                          return Text(
+                            "لم تنضم لأي مجموعة بعد",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[600],
+                            ),
+                          );
+                        } else if (state is HomeLoadingData) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          return const SizedBox();
+                        }
+                      },
+                    ),
+                    const Divider(
+                      endIndent: 70,
+                      indent: 70,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

@@ -19,6 +19,7 @@ const String kNotificationPublicTopic = "public";
 List<Widget> buildScreens() {
   return [
     const Magmo3at(),
+    const Elpernameg(),
     const PersonalView(),
     const NotesView(),
     const Derasetketab()
@@ -30,6 +31,12 @@ List<PersistentBottomNavBarItem> navBarsItems() {
     PersistentBottomNavBarItem(
       icon: const Icon(Icons.group_work_rounded),
       title: ("المجموعات"),
+      activeColorPrimary: mainColor,
+      inactiveColorPrimary: Colors.grey,
+    ),
+    PersistentBottomNavBarItem(
+      icon: const Icon(Icons.calendar_today),
+      title: ("البرنامج"),
       activeColorPrimary: mainColor,
       inactiveColorPrimary: Colors.grey,
     ),

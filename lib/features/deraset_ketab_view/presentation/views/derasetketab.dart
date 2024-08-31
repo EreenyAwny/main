@@ -50,7 +50,6 @@ class Derasetketab extends StatelessWidget {
                     day_title: "اليوم الاول : حوش اللى وقع منك روحيا ",
                     subject1:
                         "بطرس و يوحنا أنا أذهب لأتصيد ( انجيل يوحنا  21 : 1 - 7) ",
-                    subject2: "",
                   ),
                 ),
                 InkWell(
