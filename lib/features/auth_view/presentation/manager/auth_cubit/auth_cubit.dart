@@ -21,25 +21,25 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController passController = TextEditingController();
 
   submit({required String name}) {
-    EasyLoading.show(status: 'loading...');
+    EasyLoading.show(status: 'جاري التحميل...');
     // save data to hive
     Box box = Hive.box(HiveApi.configrationBox);
     box.put(HiveApi.userNamekey, name);
-    Box box2 = Hive.box(HiveApi.configrationBox);
-    box2.put(HiveApi.mNum, mNum);
+    box.put(HiveApi.mNum, mNum);
     if (type == "admin" && passController.text == password) {
-      box2.put(HiveApi.type, type);
+      box.put(HiveApi.type, type);
       Get.offNamed(GetPages.kHomeView);
     } else if (type == "admin" && passController.text != password) {
+      EasyLoading.dismiss();
       EasyLoading.showError("كلمة المرور غير صحيحة");
-      box2.put(HiveApi.type, type);
+      box.put(HiveApi.type, type);
     } else {
-      box2.put(HiveApi.type, type);
+      box.put(HiveApi.type, type);
       // save data to firebase firestore
       _saveDataToFirestore(name: name, mNum: mNum);
+      EasyLoading.dismiss();
       Get.offNamed(GetPages.kHomeView);
     }
-    EasyLoading.dismiss();
   }
 
   showpassword(bool value) {

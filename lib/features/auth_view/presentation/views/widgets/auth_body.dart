@@ -18,35 +18,34 @@ class AuthBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> passFormKey = GlobalKey<FormState>();
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    return Column(
-      children: [
-        Lottie.asset(
-          "assets/lottie/Hello.json",
-          height: 450,
-        ),
-        const Text(
-          "يا Welcome بيك",
-          style: TextStyle(
-            fontSize: 40,
-            fontWeight: FontWeight.bold,
+    return Form(
+      key: formKey,
+      child: Column(
+        children: [
+          Lottie.asset(
+            "assets/lottie/Hello.json",
+            height: 450,
           ),
-        ),
-        const SwitchableForNumOfMotamer(),
-        const SizedBox(height: 10),
-        NameTextBox(formKey: formKey, controller: controller),
-        BlocBuilder<AuthCubit, AuthState>(
-          builder: (context, state) {
-            if (state is AuthShowPassword) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 5),
-                    Form(
-                      key: passFormKey,
-                      child: TextFormField(
+          const Text(
+            "يا Welcome بيك",
+            style: TextStyle(
+              fontSize: 40,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SwitchableForNumOfMotamer(),
+          const SizedBox(height: 10),
+          NameTextBox(formKey: formKey, controller: controller),
+          BlocBuilder<AuthCubit, AuthState>(
+            builder: (context, state) {
+              if (state is AuthShowPassword) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 5),
+                      TextFormField(
                         obscureText: true,
                         controller:
                             BlocProvider.of<AuthCubit>(context).passController,
@@ -72,63 +71,47 @@ class AuthBody extends StatelessWidget {
                           return null;
                         },
                       ),
-                    ),
-                  ],
-                ),
-              );
-            } else {
-              return const SizedBox();
-            }
-          },
-        ),
-        const SizedBox(height: 10),
-        const SwitchableForNumOfType(),
-        const SizedBox(height: 20),
-        ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(
-              mainColor,
-            ),
-          ),
-          onPressed: () async {
-            EasyLoading.show(status: 'loading...');
-            // validate the form
-            if (!formKey.currentState!.validate()) {
-              EasyLoading.dismiss();
-              if (passFormKey.currentState == null ||
-                  !passFormKey.currentState!.validate() &&
-                      BlocProvider.of<AuthCubit>(context).state
-                          is AuthShowPassword) {
-                EasyLoading.dismiss();
+                    ],
+                  ),
+                );
+              } else {
+                return const SizedBox();
               }
-              return;
-            } else {
-              if (!passFormKey.currentState!.validate() &&
-                  BlocProvider.of<AuthCubit>(context).state
-                      is AuthShowPassword) {
+            },
+          ),
+          const SizedBox(height: 10),
+          const SwitchableForNumOfType(),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all(
+                mainColor,
+              ),
+            ),
+            onPressed: () async {
+              // validate the form
+              if (!formKey.currentState!.validate()) {
                 EasyLoading.dismiss();
                 return;
               }
-            }
 
-            await BlocProvider.of<AuthCubit>(context).submit(
-              name: controller.text,
-            );
-
-            EasyLoading.dismiss();
-          },
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              "Done",
-              style: TextStyle(
-                fontSize: 22,
-                color: Colors.white,
+              await BlocProvider.of<AuthCubit>(context).submit(
+                name: controller.text,
+              );
+            },
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                "Done",
+                style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
