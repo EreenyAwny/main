@@ -15,11 +15,10 @@ class MainHomeView extends StatelessWidget {
       controller: controller,
       screens: buildScreens(),
       items: navBarsItems(),
-      handleAndroidBackButtonPress: true, // Default is true.
-      resizeToAvoidBottomInset:
-          true, // This needs to be true if you want to move up the screen on a non-scrollable screen when keyboard appears. Default is true.
-      stateManagement: true, // Default is true.
-      hideNavigationBarWhenKeyboardAppears: true,
+      // handleAndroidBackButtonPress: true, // Default is true.
+      resizeToAvoidBottomInset: false,
+      stateManagement: false, // Default is true.
+      hideNavigationBarWhenKeyboardAppears: false,
       popBehaviorOnSelectedNavBarItemPress: PopBehavior.all,
       padding: const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 10),
       isVisible: true,
