@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mutamaruna/core/constants.dart';
-import 'package:mutamaruna/core/widgets/app_leading.dart';
 import 'package:mutamaruna/features/magmoat/presentation/manager/magmo3at_cubit/magmo3at_cubit.dart';
 import 'package:mutamaruna/features/magmoat/presentation/views/widget/add_group_button.dart';
 import 'package:mutamaruna/features/magmoat/presentation/views/widget/magmoat_body.dart';
@@ -23,6 +22,7 @@ class _Magmo3at extends State<Magmo3at> {
     return BlocProvider(
       create: (context) => Magmo3atCubit()..init(),
       child: Scaffold(
+        backgroundColor: mainColor,
         floatingActionButton: AddGroupButton(
             formKey: formKey,
             groupNameController: groupNameController,
@@ -34,9 +34,15 @@ class _Magmo3at extends State<Magmo3at> {
             style: TextStyle(color: Colors.white),
           ),
           backgroundColor: mainColor,
-          leading: const AppLeading(),
+          leading: null,
         ),
-        body: const MagmoatBody(),
+        body: Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+              color: Colors.white,
+            ),
+            child: const MagmoatBody()),
       ),
     );
   }

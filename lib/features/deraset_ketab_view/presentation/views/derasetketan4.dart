@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mutamaruna/core/constants.dart';
+import 'package:mutamaruna/core/widgets/app_leading.dart';
 import 'package:mutamaruna/core/widgets/derasetKetab_body.dart';
 
 class Derasetketab4 extends StatelessWidget {
@@ -8,11 +9,14 @@ class Derasetketab4 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text(
           "اليوم الرابع",
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          style: TextStyle(
+              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 25),
         ),
         backgroundColor: mainColor,
+        leading: const AppLeading(),
       ),
       body: ListView(
         children: [

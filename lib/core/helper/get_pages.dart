@@ -7,7 +7,7 @@ import 'package:mutamaruna/features/deraset_ketab_view/presentation/views/derase
 import 'package:mutamaruna/features/deraset_ketab_view/presentation/views/derasetketab3.dart';
 import 'package:mutamaruna/features/deraset_ketab_view/presentation/views/derasetketan4.dart';
 import 'package:mutamaruna/features/el_bernameg_view/presentation/views/elpernameg.dart';
-import 'package:mutamaruna/features/home/presentation/view/home_view.dart';
+import 'package:mutamaruna/features/home_view/presentation/view/home_view.dart';
 import 'package:mutamaruna/features/magmoat/presentation/views/magmo3at.dart';
 import 'package:mutamaruna/features/magmoat/presentation/views/widget/add_group_members_view.dart';
 import 'package:mutamaruna/features/notes/presentation/views/add_note_view.dart';
@@ -19,8 +19,8 @@ import 'package:mutamaruna/features/post_page/views/post.dart';
 import 'package:mutamaruna/features/splash_view/presentation/views/splash_view.dart';
 
 abstract class GetPages {
-  static Transition ktransition = Transition.leftToRight;
-  static const String kHomeView = "/kHomeView";
+  static Transition ktransition = Transition.fadeIn;
+  static const String kHomeView = "/";
   static const String kElpernameg = "/kElpernameg";
   static const String kMagmo3at = "/kMagmo3at";
   static const String kNotepage = "/kNotepage";
@@ -42,7 +42,7 @@ abstract class GetPages {
   static List<GetPage<dynamic>> getPages = [
     GetPage(
       name: kHomeView,
-      page: () => const HomeView(),
+      page: () => const MainHomeView(),
       transition: ktransition,
     ),
     GetPage(

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Item extends StatelessWidget {
   const Item({super.key, this.day, this.photo});
@@ -8,28 +9,38 @@ class Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Container(
-            padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
-            child: Text(
-              day!,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
+          child: Text(
+            day!,
+            style: const TextStyle(
+              fontSize: 25,
             ),
           ),
-          Container(
-            height: 455,
-            width: 500,
-            padding: const EdgeInsets.all(10),
-            child: Image.asset(
-              photo!,
-              fit: BoxFit.cover,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(25),
+            child: AspectRatio(
+              aspectRatio: 1 / 1.25,
+              child: Image.asset(
+                photo!,
+                fit: BoxFit.cover,
+              ),
             ),
-          )
-        ],
-      ),
+          ),
+        ),
+        const Divider(
+          color: Colors.grey,
+          thickness: 1,
+          endIndent: 50,
+          indent: 50,
+        ),
+      ],
     );
   }
 }

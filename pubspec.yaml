@@ -35,6 +35,7 @@ dependencies:
   lottie: ^3.1.2
   multi_dropdown: ^3.0.1
   permission_handler: ^11.3.1
+  persistent_bottom_nav_bar: ^6.2.1
   quickalert: ^1.1.0
   rename: ^3.0.2
   textfield_tags: ^3.0.1

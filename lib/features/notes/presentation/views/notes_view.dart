@@ -6,7 +6,6 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:mutamaruna/core/constants.dart';
 import 'package:mutamaruna/core/helper/get_pages.dart';
 import 'package:mutamaruna/core/models/note_model/note_model.dart';
-import 'package:mutamaruna/core/widgets/app_leading.dart';
 import 'package:mutamaruna/features/notes/presentation/manager/notes_cubit/notes_cubit.dart';
 import 'package:mutamaruna/features/notes/presentation/manager/notes_cubit/notes_states.dart';
 
@@ -31,8 +30,10 @@ class _NotesView extends State<NotesView> {
         List<NoteModel> note = BlocProvider.of<NotesCubit>(context).notes!;
 
         return Scaffold(
+          backgroundColor: mainColor,
           appBar: AppBar(
-            leading: const AppLeading(),
+            leading: null,
+            centerTitle: true,
             title: const Text(
               "ملاحظاتك 📝",
               style: TextStyle(color: Colors.white),
@@ -56,7 +57,7 @@ class _NotesView extends State<NotesView> {
                         AwesomeDialog(
                           context: context,
                           animType: AnimType.rightSlide,
-                          desc: "ماذا تريد ؟",
+                          desc: "what do you want",
                           btnOkText: "تعديل",
                           btnCancelText: "مسح",
                           btnCancelOnPress: () {

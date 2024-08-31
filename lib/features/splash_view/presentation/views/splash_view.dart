@@ -72,7 +72,7 @@ class SplashView extends StatelessWidget {
                   bool isconnected = await checkInternet();
                   if (mNum != null && isconnected) {
                     EasyLoading.dismiss();
-                    EasyLoading.show(status: 'loading groups data...');
+                    EasyLoading.show(status: 'جاري تحميل البيانات');
                     // getting data of magmoat and storing them in hive
                     List<GroupsData> groups = [];
                     FirebaseFirestore.instance
