@@ -23,10 +23,19 @@ class _Magmo3at extends State<Magmo3at> {
       create: (context) => Magmo3atCubit()..init(),
       child: Scaffold(
         backgroundColor: mainColor,
-        floatingActionButton: AddGroupButton(
-            formKey: formKey,
-            groupNameController: groupNameController,
-            passController: passController),
+        floatingActionButton: BlocBuilder<Magmo3atCubit, Magmo3atState>(
+          builder: (context, state) {
+            if (BlocProvider.of<Magmo3atCubit>(context).admin) {
+              return AddGroupButton(
+                formKey: formKey,
+                groupNameController: groupNameController,
+                passController: passController,
+              );
+            } else {
+              return const SizedBox();
+            }
+          },
+        ),
         appBar: AppBar(
           centerTitle: true,
           title: const Text(

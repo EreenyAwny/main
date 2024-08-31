@@ -4,8 +4,8 @@ import 'package:mutamaruna/core/constants.dart';
 import 'package:mutamaruna/features/auth_view/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-class SwitchableForNumOfMotamer extends StatelessWidget {
-  const SwitchableForNumOfMotamer({
+class SwitchableForNumOfType extends StatelessWidget {
+  const SwitchableForNumOfType({
     super.key,
   });
 
@@ -18,7 +18,7 @@ class SwitchableForNumOfMotamer extends StatelessWidget {
       activeFgColor: Colors.white,
       dividerColor: mainColor,
       fontSize: 22,
-      minWidth: 160,
+      minWidth: 120,
       curve: Curves.bounceInOut,
       cornerRadius: 50,
       centerText: true,
@@ -26,14 +26,14 @@ class SwitchableForNumOfMotamer extends StatelessWidget {
       inactiveFgColor: Colors.black,
       textDirectionRTL: true,
       initialLabelIndex: 0,
-      totalSwitches: BlocProvider.of<AuthCubit>(context).labels.length,
-      labels: BlocProvider.of<AuthCubit>(context).labels,
+      totalSwitches: BlocProvider.of<AuthCubit>(context).types.length,
+      labels: BlocProvider.of<AuthCubit>(context).types,
       onToggle: (index) {
         if (index != null) {
           if (index == 0) {
-            BlocProvider.of<AuthCubit>(context).mNum = "first";
+            BlocProvider.of<AuthCubit>(context).showpassword(false);
           } else {
-            BlocProvider.of<AuthCubit>(context).mNum = "second";
+            BlocProvider.of<AuthCubit>(context).showpassword(true);
           }
         }
       },

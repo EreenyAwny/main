@@ -92,7 +92,7 @@ class _AddGroupMembersViewState extends State<AddGroupMembersView> {
                           spacing: 10,
                         ),
                         fieldDecoration: FieldDecoration(
-                          hintText: 'Members',
+                          hintText: 'الاعضاء',
                           hintStyle: const TextStyle(color: Colors.black87),
                           prefixIcon: const Icon(CupertinoIcons.person_2_fill),
                           showClearIcon: false,
@@ -113,7 +113,7 @@ class _AddGroupMembersViewState extends State<AddGroupMembersView> {
                           header: Padding(
                             padding: EdgeInsets.all(8),
                             child: Text(
-                              'Select members from the list',
+                              'اختر الاعضاء من القائمة',
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                 fontSize: 16,

@@ -14,3 +14,5 @@ final class HomeGroupNameFound extends HomeState {
 
   HomeGroupNameFound(this.myGroup);
 }
+
+final class PersonalAdmin extends HomeState {}

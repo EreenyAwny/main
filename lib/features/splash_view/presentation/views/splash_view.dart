@@ -88,10 +88,10 @@ class SplashView extends StatelessWidget {
                     box.put(HiveApi.groupsKey, groups);
                   }
 
+                  EasyLoading.dismiss();
                   box.get(HiveApi.userNamekey) == null
                       ? Get.offNamed(GetPages.kAuth)
                       : Get.offNamed(GetPages.kHomeView);
-                  EasyLoading.dismiss();
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),

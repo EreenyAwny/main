@@ -12,6 +12,7 @@ class HiveApi {
   static String kGroupsItemsKey = 'kGroupsItemsKey';
   static String userNamekey = 'userName';
   static String membersKey = 'membersKey';
+  static String type = 'type';
 
   void openBoxes() {
     Hive.openBox(grades);

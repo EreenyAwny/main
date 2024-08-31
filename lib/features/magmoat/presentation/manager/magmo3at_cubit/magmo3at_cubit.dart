@@ -15,6 +15,7 @@ import 'package:mutamaruna/core/constants.dart';
 import 'package:mutamaruna/core/functions/check_internet.dart';
 import 'package:mutamaruna/core/helper/get_pages.dart';
 import 'package:mutamaruna/core/hive_api.dart';
+import 'package:mutamaruna/features/auth_view/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:mutamaruna/features/magmoat/data/models/groups_model/groups_model.dart';
 import 'package:mutamaruna/features/magmoat/presentation/views/widget/add_group_members_view.dart';
 
@@ -23,6 +24,7 @@ part 'magmo3at_state.dart';
 class Magmo3atCubit extends Cubit<Magmo3atState> {
   bool editMode = false;
   bool kIsconected = false;
+  bool admin = false;
 
   Magmo3atCubit() : super(Magmo3atInitial());
 
@@ -47,6 +49,10 @@ class Magmo3atCubit extends Cubit<Magmo3atState> {
 
       // store data in hive
       Hive.box(HiveApi.configrationBox).put(HiveApi.groupsKey, groups);
+      String type = box.get(HiveApi.type);
+      if (type == "admin") {
+        admin = true;
+      }
       emit(Magmo3atLoaded(groups));
     } else {
       // getting data from hive
@@ -60,30 +66,36 @@ class Magmo3atCubit extends Cubit<Magmo3atState> {
     }
   }
 
-  goToEditPage({required List<GroupsData> groups, required int index}) {
-    EasyLoading.show(status: "loading");
-    Box box = Hive.box(HiveApi.configrationBox);
-    List<String>? allnames = box.get(HiveApi.allUserskey) as List<String>?;
-    allnames ??= [];
+  goToEditPage({required List<GroupsData> groups, required int index}) async {
+    EasyLoading.show(status: "جاري التحميل");
+    // check internet
+    bool isconected = await checkInternet();
+    if (isconected) {
+      Box box = Hive.box(HiveApi.configrationBox);
+      List<String> allnames =
+          await gettingAllUsersNames(mNum: box.get(HiveApi.mNum));
 
-    // getting stored members names from hive
-    List<String> members = groups[index].members!;
+      // getting stored members names from hive
+      List<String> members = groups[index].members!;
 
-    List<DropdownItem<User>> items = List<DropdownItem<User>>.generate(
-      allnames.length,
-      (index) {
-        return DropdownItem(
-          label: allnames![index],
-          value: User(name: allnames[index], id: index + 1),
-          selected: members.contains(allnames[index]),
-        );
-      },
-    );
-    EasyLoading.dismiss();
-    Get.offNamed(GetPages.kaddGroupMembers, arguments: {
-      "items": items,
-      'groupData': groups[index],
-    });
+      List<DropdownItem<User>> items = List<DropdownItem<User>>.generate(
+        allnames.length,
+        (index) {
+          return DropdownItem(
+            label: allnames[index],
+            value: User(name: allnames[index], id: index + 1),
+            selected: members.contains(allnames[index]),
+          );
+        },
+      );
+      EasyLoading.dismiss();
+      Get.toNamed(GetPages.kaddGroupMembers, arguments: {
+        "items": items,
+        'groupData': groups[index],
+      });
+    } else {
+      EasyLoading.showError("يجب الاتصال بالانترنت");
+    }
   }
 
   Future<FirebaseAuth.UserCredential> signInAnonymously() async {

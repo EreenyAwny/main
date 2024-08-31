@@ -6,6 +6,7 @@ import 'package:mutamaruna/core/constants.dart';
 import 'package:mutamaruna/features/auth_view/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:mutamaruna/features/auth_view/presentation/views/widgets/name_text_box.dart';
 import 'package:mutamaruna/features/auth_view/presentation/views/widgets/switchable_for_num_of_motamer.dart';
+import 'package:mutamaruna/features/auth_view/presentation/views/widgets/switchable_for_num_of_type.dart';
 
 class AuthBody extends StatelessWidget {
   const AuthBody({
@@ -19,6 +20,7 @@ class AuthBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> passFormKey = GlobalKey<FormState>();
     return Column(
       children: [
         Lottie.asset(
@@ -32,9 +34,56 @@ class AuthBody extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        NameTextBox(formKey: formKey, controller: controller),
-        const SizedBox(height: 20),
         const SwitchableForNumOfMotamer(),
+        const SizedBox(height: 10),
+        NameTextBox(formKey: formKey, controller: controller),
+        BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, state) {
+            if (state is AuthShowPassword) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 5),
+                    Form(
+                      key: passFormKey,
+                      child: TextFormField(
+                        obscureText: true,
+                        controller:
+                            BlocProvider.of<AuthCubit>(context).passController,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 30,
+                            vertical: 15,
+                          ),
+                          hintStyle: const TextStyle(
+                            fontSize: 20,
+                          ),
+                          hintText: "الباسورد",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "لازم تكتب الباسورد";
+                          } else if (value.length < 6) {
+                            return "الباسورد لازم يكون اكتر من 6 حروف";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            } else {
+              return const SizedBox();
+            }
+          },
+        ),
+        const SizedBox(height: 10),
+        const SwitchableForNumOfType(),
         const SizedBox(height: 20),
         ElevatedButton(
           style: ButtonStyle(
@@ -47,12 +96,25 @@ class AuthBody extends StatelessWidget {
             // validate the form
             if (!formKey.currentState!.validate()) {
               EasyLoading.dismiss();
+              if (!passFormKey.currentState!.validate() &&
+                  BlocProvider.of<AuthCubit>(context).state
+                      is AuthShowPassword) {
+                EasyLoading.dismiss();
+              }
               return;
             } else {
-              await BlocProvider.of<AuthCubit>(context).submit(
-                name: controller.text,
-              );
+              if (!passFormKey.currentState!.validate() &&
+                  BlocProvider.of<AuthCubit>(context).state
+                      is AuthShowPassword) {
+                EasyLoading.dismiss();
+                return;
+              }
             }
+
+            await BlocProvider.of<AuthCubit>(context).submit(
+              name: controller.text,
+            );
+
             EasyLoading.dismiss();
           },
           child: const Padding(

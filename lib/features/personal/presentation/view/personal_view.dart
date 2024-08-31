@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:mutamaruna/core/constants.dart';
 import 'package:mutamaruna/core/hive_api.dart';
-import 'package:mutamaruna/features/home/presentation/manager/home_cubit/home_cubit.dart';
+import 'package:mutamaruna/features/personal/presentation/manager/home_cubit/home_cubit.dart';
 
 class PersonalView extends StatelessWidget {
   const PersonalView({super.key});
@@ -94,6 +94,20 @@ class PersonalView extends StatelessWidget {
                     const Divider(
                       endIndent: 70,
                       indent: 70,
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      "الشعار",
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const Divider(endIndent: 120, indent: 120),
+                    // الشعار
+                    Image.asset(
+                      "images/slo.png",
                     ),
                   ],
                 ),

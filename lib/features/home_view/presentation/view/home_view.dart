@@ -9,7 +9,7 @@ class MainHomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     PersistentTabController controller;
 
-    controller = PersistentTabController(initialIndex: 1);
+    controller = PersistentTabController(initialIndex: 2);
     return PersistentTabView(
       context,
       controller: controller,

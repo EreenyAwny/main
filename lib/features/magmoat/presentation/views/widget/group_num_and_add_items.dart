@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mutamaruna/core/constants.dart';
 import 'package:mutamaruna/features/magmoat/data/models/groups_model/groups_model.dart';
 import 'package:mutamaruna/features/magmoat/presentation/manager/magmo3at_cubit/magmo3at_cubit.dart';
-import 'package:mutamaruna/features/magmoat/presentation/views/widget/pass_bottom_sheet.dart';
 
 class NumAndAddItems extends StatelessWidget {
   const NumAndAddItems({super.key, required this.groups, required this.index});
@@ -13,8 +12,6 @@ class NumAndAddItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    TextEditingController controller = TextEditingController();
     return Padding(
       padding: const EdgeInsets.only(right: 10),
       child: Row(
@@ -27,38 +24,29 @@ class NumAndAddItems extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Row(
-            children: [
-              ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(mainColor)),
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    enableDrag: true,
-                    elevation: 2,
-                    isDismissible: true,
-                    showDragHandle: true,
-                    backgroundColor: Colors.grey[200],
-                    builder: (context) {
-                      return BlocProvider(
-                        create: (context) => Magmo3atCubit(),
-                        child: AddPasswordToGo(
-                          formKey: formKey,
-                          groups: groups,
-                          index: index,
-                          passwordcontroller: controller,
-                        ),
-                      );
-                    },
-                  );
-                },
-                child: const Text(
-                  "تعديل",
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                ),
-              ),
-            ],
+          BlocBuilder<Magmo3atCubit, Magmo3atState>(
+            builder: (context, state) {
+              if (BlocProvider.of<Magmo3atCubit>(context).admin) {
+                return Row(
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(mainColor)),
+                      onPressed: () {
+                        BlocProvider.of<Magmo3atCubit>(context)
+                            .goToEditPage(groups: groups, index: index);
+                      },
+                      child: const Text(
+                        "تعديل",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                  ],
+                );
+              } else {
+                return const SizedBox();
+              }
+            },
           )
         ],
       ),

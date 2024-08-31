@@ -14,3 +14,5 @@ final class Magmo3atLoaded extends Magmo3atState {
 final class Magmo3atNullData extends Magmo3atState {}
 
 final class EditModeState extends Magmo3atState {}
+
+final class Magmo3atStateAdmin extends Magmo3atState {}
