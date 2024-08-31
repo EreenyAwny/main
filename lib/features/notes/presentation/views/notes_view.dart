@@ -56,7 +56,7 @@ class _NotesView extends State<NotesView> {
                         AwesomeDialog(
                           context: context,
                           animType: AnimType.rightSlide,
-                          desc: "what do you want",
+                          desc: "ماذا تريد ؟",
                           btnOkText: "تعديل",
                           btnCancelText: "مسح",
                           btnCancelOnPress: () {

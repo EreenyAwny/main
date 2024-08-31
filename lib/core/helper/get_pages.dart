@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
-import 'package:mutamaruna/categories.dart/derasetketab/derasetketab1.dart';
-import 'package:mutamaruna/categories.dart/derasetketab/derasetketab2.dart';
-import 'package:mutamaruna/categories.dart/derasetketab/derasetketab3.dart';
-import 'package:mutamaruna/features/deraset_ketab_view/presentation/views/derasetketab.dart';
-import 'package:mutamaruna/features/deraset_ketab_view/presentation/views/derasetketan4.dart';
-import 'package:mutamaruna/features/el_bernameg_view/presentation/views/elpernameg.dart';
 import 'package:mutamaruna/features/add_groups/presentation/views/add_groups_view.dart';
 import 'package:mutamaruna/features/auth_view/presentation/views/auth_view.dart';
+import 'package:mutamaruna/features/deraset_ketab_view/presentation/views/derasetketab.dart';
+import 'package:mutamaruna/features/deraset_ketab_view/presentation/views/derasetketab1.dart';
+import 'package:mutamaruna/features/deraset_ketab_view/presentation/views/derasetketab2.dart';
+import 'package:mutamaruna/features/deraset_ketab_view/presentation/views/derasetketab3.dart';
+import 'package:mutamaruna/features/deraset_ketab_view/presentation/views/derasetketan4.dart';
+import 'package:mutamaruna/features/el_bernameg_view/presentation/views/elpernameg.dart';
 import 'package:mutamaruna/features/home/presentation/view/home_view.dart';
 import 'package:mutamaruna/features/magmoat/presentation/views/magmo3at.dart';
 import 'package:mutamaruna/features/magmoat/presentation/views/widget/add_group_members_view.dart';
@@ -14,6 +14,8 @@ import 'package:mutamaruna/features/notes/presentation/views/add_note_view.dart'
 import 'package:mutamaruna/features/notes/presentation/views/edit_note_view.dart';
 import 'package:mutamaruna/features/notes/presentation/views/notes_view.dart';
 import 'package:mutamaruna/features/notes/presentation/views/widgets/notedetails.dart';
+import 'package:mutamaruna/features/post_page/views/image_view.dart';
+import 'package:mutamaruna/features/post_page/views/post.dart';
 import 'package:mutamaruna/features/splash_view/presentation/views/splash_view.dart';
 
 abstract class GetPages {
@@ -34,6 +36,8 @@ abstract class GetPages {
   static const String kDerasetketab3 = "/kDerasetketab3";
   static const String kDerasetketab4 = "/kDerasetketab4";
   static String kaddGroupMembers = "/kaddGroupMembers";
+  static String kpost = "/kpost";
+  static String kImageView = "/kImageView";
 
   static List<GetPage<dynamic>> getPages = [
     GetPage(
@@ -114,6 +118,16 @@ abstract class GetPages {
     GetPage(
       name: kaddGroupMembers,
       page: () => const AddGroupMembersView(),
+      transition: ktransition,
+    ),
+    GetPage(
+      name: kpost,
+      page: () => const Post(),
+      transition: ktransition,
+    ),
+    GetPage(
+      name: kImageView,
+      page: () => const ImageView(),
       transition: ktransition,
     ),
   ];

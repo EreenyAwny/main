@@ -68,6 +68,12 @@ class HomeView extends StatelessWidget {
                       },
                       child: const HomeBlocElement(title: "🧐فتشوا الكتب"),
                     ),
+                    InkWell(
+                      onTap: () {
+                        Get.toNamed(GetPages.kpost);
+                      },
+                      child: const HomeBlocElement(title: "منشورات"),
+                    ),
                   ],
                 ),
               ),
