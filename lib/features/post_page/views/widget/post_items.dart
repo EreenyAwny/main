@@ -1,4 +1,3 @@
-import 'package:alert_dialog/alert_dialog.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +22,7 @@ class PostItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Box box = Hive.box(HiveApi.configrationBox);
     return Container(
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(10),
@@ -59,35 +59,31 @@ class PostItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                  IconButton(
-                      onPressed: () {
-                        AwesomeDialog(
-                          context: context,
-                          animType: AnimType.rightSlide,
-                          desc: "هل تريد حذف المنشور ؟",
-                          btnOkText: "رجوع",
-                          btnCancelText: "حذف",
-                          btnCancelOnPress: () {
-                            if (Hive.box(HiveApi.configrationBox)
-                                    .get(HiveApi.userNamekey) ==
-                                posts[index]["name"]) {
-                              FirebaseFirestore.instance
-                                  .collection('motamerat')
-                                  .doc(Hive.box(HiveApi.configrationBox)
-                                      .get(HiveApi.mNum))
-                                  .collection('posts')
-                                  .doc(posts[index].id)
-                                  .delete();
-                            } else {
-                              alert(context,
-                                  title: const Text(
-                                      "يمكن لصاحب هذا المنشور فقط حذفه"));
-                            }
+                  box.get(HiveApi.userNamekey) == posts[index]["name"] ||
+                          box.get(HiveApi.type) == "admin"
+                      ? IconButton(
+                          onPressed: () {
+                            AwesomeDialog(
+                              context: context,
+                              animType: AnimType.rightSlide,
+                              desc: "هل تريد حذف المنشور ؟",
+                              btnOkText: "رجوع",
+                              btnCancelText: "حذف",
+                              btnCancelOnPress: () {
+                                FirebaseFirestore.instance
+                                    .collection('motamerat')
+                                    .doc(Hive.box(HiveApi.configrationBox)
+                                        .get(HiveApi.mNum))
+                                    .collection('posts')
+                                    .doc(posts[index].id)
+                                    .delete();
+                              },
+                              btnOkOnPress: () {},
+                            ).show();
                           },
-                          btnOkOnPress: () {},
-                        ).show();
-                      },
-                      icon: const Icon(Icons.delete)),
+                          icon: const Icon(Icons.delete),
+                        )
+                      : const SizedBox(),
                 ],
               ),
               Text(

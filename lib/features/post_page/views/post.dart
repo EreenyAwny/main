@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mutamaruna/core/constants.dart';
-import 'package:mutamaruna/core/widgets/app_leading.dart';
 import 'package:mutamaruna/features/post_page/presentation/manager/post_cubit/post_cubit.dart';
 import 'package:mutamaruna/features/post_page/views/widget/add_post_button.dart';
 import 'package:mutamaruna/features/post_page/views/widget/post_body.dart';
@@ -33,7 +32,7 @@ class _Post extends State<Post> {
             style: TextStyle(color: Colors.white),
           ),
           backgroundColor: mainColor,
-          leading: const AppLeading(),
+          leading: null,
         ),
         body: const PostBody(),
       ),
