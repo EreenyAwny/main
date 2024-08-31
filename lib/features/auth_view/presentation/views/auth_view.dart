@@ -8,14 +8,13 @@ class AuthView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> formKey = GlobalKey<FormState>();
     TextEditingController controller = TextEditingController();
     return BlocProvider(
       create: (context) => AuthCubit(),
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
-            child: AuthBody(formKey: formKey, controller: controller),
+            child: AuthBody(controller: controller),
           ),
         ),
       ),

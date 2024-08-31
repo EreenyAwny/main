@@ -11,16 +11,15 @@ import 'package:mutamaruna/features/auth_view/presentation/views/widgets/switcha
 class AuthBody extends StatelessWidget {
   const AuthBody({
     super.key,
-    required this.formKey,
     required this.controller,
   });
 
-  final GlobalKey<FormState> formKey;
   final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> passFormKey = GlobalKey<FormState>();
+    GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Column(
       children: [
         Lottie.asset(
@@ -96,9 +95,10 @@ class AuthBody extends StatelessWidget {
             // validate the form
             if (!formKey.currentState!.validate()) {
               EasyLoading.dismiss();
-              if (!passFormKey.currentState!.validate() &&
-                  BlocProvider.of<AuthCubit>(context).state
-                      is AuthShowPassword) {
+              if (passFormKey.currentState == null ||
+                  !passFormKey.currentState!.validate() &&
+                      BlocProvider.of<AuthCubit>(context).state
+                          is AuthShowPassword) {
                 EasyLoading.dismiss();
               }
               return;

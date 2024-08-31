@@ -5,6 +5,7 @@ import 'package:mutamaruna/features/el_bernameg_view/presentation/views/elpernam
 import 'package:mutamaruna/features/personal/presentation/view/personal_view.dart';
 import 'package:mutamaruna/features/magmoat/presentation/views/magmo3at.dart';
 import 'package:mutamaruna/features/notes/presentation/views/notes_view.dart';
+import 'package:mutamaruna/features/post_page/views/post.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 Color mainColor = Colors.blue;
@@ -23,7 +24,8 @@ List<Widget> buildScreens() {
     const Elpernameg(),
     const PersonalView(),
     const NotesView(),
-    const Derasetketab()
+    const Derasetketab(),
+    const Post(),
   ];
 }
 
@@ -56,6 +58,12 @@ List<PersistentBottomNavBarItem> navBarsItems() {
     PersistentBottomNavBarItem(
       icon: const Icon(Icons.book),
       title: ("دعوتك باسمك"),
+      activeColorPrimary: mainColor,
+      inactiveColorPrimary: Colors.grey,
+    ),
+    PersistentBottomNavBarItem(
+      icon: const Icon(Icons.podcasts_sharp),
+      title: ("البوستات"),
       activeColorPrimary: mainColor,
       inactiveColorPrimary: Colors.grey,
     ),
