@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_core/get_core.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:hive/hive.dart';
 import 'package:mutamaruna/core/constants.dart';
+import 'package:mutamaruna/core/helper/get_pages.dart';
 import 'package:mutamaruna/core/hive_api.dart';
 import 'package:mutamaruna/features/personal/presentation/manager/home_cubit/home_cubit.dart';
 
@@ -19,10 +22,29 @@ class PersonalView extends StatelessWidget {
       child: Scaffold(
         backgroundColor: mainColor,
         appBar: AppBar(
+          actions: [
+            Hive.box(HiveApi.configrationBox).get(HiveApi.type) == "admin"
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: IconButton(
+                      icon: const Icon(Icons.notifications_active,
+                          color: Colors.white),
+                      iconSize: 30,
+                      onPressed: () {
+                        Get.toNamed(GetPages.kSendNotificationView);
+                      },
+                    ),
+                  )
+                : const SizedBox(),
+          ],
           centerTitle: true,
           title: const Text(
             "بياناتي",
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           backgroundColor: mainColor,
         ),

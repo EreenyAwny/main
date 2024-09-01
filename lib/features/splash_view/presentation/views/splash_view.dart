@@ -6,6 +6,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:hive/hive.dart';
 import 'package:mutamaruna/core/constants.dart';
 import 'package:mutamaruna/core/functions/check_internet.dart';
+import 'package:mutamaruna/core/functions/notification_permission.dart';
 import 'package:mutamaruna/core/helper/get_pages.dart';
 import 'package:mutamaruna/core/hive_api.dart';
 import 'package:mutamaruna/features/magmoat/data/models/groups_model/groups_model.dart';
@@ -52,7 +53,7 @@ class SplashView extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.black.withOpacity(0.6),
+                      color: Colors.grey[700],
                     ),
                   ),
                 ),
@@ -66,7 +67,7 @@ class SplashView extends StatelessWidget {
                   backgroundColor: WidgetStateProperty.all(mainColor),
                 ),
                 onPressed: () async {
-                  EasyLoading.show(status: 'loading...');
+                  EasyLoading.show(status: 'جاري التحميل...');
                   Box box = Hive.box(HiveApi.configrationBox);
                   String? mNum = box.get(HiveApi.mNum);
                   bool isconnected = await checkInternet();
@@ -87,11 +88,17 @@ class SplashView extends StatelessWidget {
                     });
                     box.put(HiveApi.groupsKey, groups);
                   }
+                  bool granted = await grantnotificationPermission();
 
                   EasyLoading.dismiss();
-                  box.get(HiveApi.userNamekey) == null
-                      ? Get.offNamed(GetPages.kAuth)
-                      : Get.offNamed(GetPages.kHomeView);
+                  EasyLoading.dismiss();
+                  if (granted) {
+                    box.get(HiveApi.userNamekey) == null
+                        ? Get.offNamed(GetPages.kAuth)
+                        : Get.offNamed(GetPages.kHomeView);
+                  } else {
+                    EasyLoading.showError("يجب تفعيل الإشعارات للمتابعة");
+                  }
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
@@ -110,7 +117,6 @@ class SplashView extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 18,
                           ),
                         ),
                       ),

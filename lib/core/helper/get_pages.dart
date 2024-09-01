@@ -14,13 +14,14 @@ import 'package:mutamaruna/features/notes/presentation/views/add_note_view.dart'
 import 'package:mutamaruna/features/notes/presentation/views/edit_note_view.dart';
 import 'package:mutamaruna/features/notes/presentation/views/notes_view.dart';
 import 'package:mutamaruna/features/notes/presentation/views/widgets/notedetails.dart';
+import 'package:mutamaruna/features/notification_send_view/presentation/views/send_notification_view.dart';
 import 'package:mutamaruna/features/post_page/views/image_view.dart';
 import 'package:mutamaruna/features/post_page/views/post.dart';
 import 'package:mutamaruna/features/splash_view/presentation/views/splash_view.dart';
 
 abstract class GetPages {
   static Transition ktransition = Transition.fadeIn;
-  static const String kHomeView = "/";
+  static const String kHomeView = "/home";
   static const String kElpernameg = "/kElpernameg";
   static const String kMagmo3at = "/kMagmo3at";
   static const String kNotepage = "/kNotepage";
@@ -38,6 +39,7 @@ abstract class GetPages {
   static String kaddGroupMembers = "/kaddGroupMembers";
   static String kpost = "/kpost";
   static String kImageView = "/kImageView";
+  static String kSendNotificationView = "/kSendNotificationView";
 
   static List<GetPage<dynamic>> getPages = [
     GetPage(
@@ -128,6 +130,11 @@ abstract class GetPages {
     GetPage(
       name: kImageView,
       page: () => const ImageView(),
+      transition: ktransition,
+    ),
+    GetPage(
+      name: kSendNotificationView,
+      page: () => const SendNotificationView(),
       transition: ktransition,
     ),
   ];

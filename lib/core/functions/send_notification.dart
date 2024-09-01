@@ -1,53 +1,63 @@
-import 'dart:convert';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:mutamaruna/core/constants.dart';
+import 'package:mutamaruna/core/functions/get_access_token.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:http/http.dart' as http;
 
 class Notifications {
-  String serverToken = '';
+  final Dio _dio = Dio();
 
-  Future<bool> sendNotification(
-    String title,
-    String body,
-    String category,
-    String imageLink,
-    String date,
-  ) async {
+  Future<bool> sendNotification({
+    required String title,
+    required String body,
+    required String imageLink,
+  }) async {
     try {
-      await http.post(
-        Uri.parse('https://fcm.googleapis.com/fcm/send'),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Authorization': 'key=$serverToken',
-        },
-        body: jsonEncode(
-          <String, dynamic>{
-            'notification': <String, dynamic>{
-              'body': body.toString(),
-              'title': title.toString(),
-              'imageUrl': imageLink,
-            },
-            'priority': 'high',
-            'data': <String, dynamic>{
-              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-              'id': '1',
-              'imageLink': imageLink.toString(),
-              'Date': date.toString(),
-              'category': category.toString()
-            },
-            'to': "/topics/$kNotificationPublicTopic",
+      final String? serverToken = await getAccessToken();
+      await _dio.post(
+        'https://fcm.googleapis.com/v1/projects/mutamaruna2/messages:send',
+        options: Options(
+          headers: <String, String>{
+            'Authorization': 'Bearer $serverToken',
           },
         ),
+        data: {
+          "message": {
+            "topic": kNotificationPublicTopic,
+            "notification": {"title": title, "body": body},
+            "android": {
+              "notification": {
+                "image": imageLink,
+                "notification_priority": "PRIORITY_MAX",
+                "sound": "default"
+              }
+            },
+            "apns": {
+              "payload": {
+                "aps": {
+                  "content_available": true,
+                }
+              },
+              "fcm_options": {
+                "image": imageLink,
+              }
+            },
+            "data": {
+              "type": "type",
+              "id": "userId",
+              "click_action": "FLUTTER_NOTIFICATION_CLICK"
+            }
+          }
+        },
       );
       return true;
-    } on Exception {
+    } on DioException {
       return false;
     }
   }
 
-  welcomeNotificationSend() async {
+  Future<void> welcomeNotificationSend() async {
     PermissionStatus status = await Permission.notification.status;
     bool granted = false;
 

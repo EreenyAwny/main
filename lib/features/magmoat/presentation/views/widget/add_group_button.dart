@@ -35,7 +35,6 @@ class AddGroupButton extends StatelessWidget {
               child: ModelBottomSheetBody(
                 formKey: formKey,
                 groupNameController: groupNameController,
-                passController: passController,
               ),
             );
           },

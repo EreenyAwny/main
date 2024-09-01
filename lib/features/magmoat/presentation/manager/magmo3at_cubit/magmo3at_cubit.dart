@@ -11,7 +11,6 @@ import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
-import 'package:mutamaruna/core/constants.dart';
 import 'package:mutamaruna/core/functions/check_internet.dart';
 import 'package:mutamaruna/core/helper/get_pages.dart';
 import 'package:mutamaruna/core/hive_api.dart';
@@ -107,7 +106,6 @@ class Magmo3atCubit extends Cubit<Magmo3atState> {
   Future<void> addGroup({
     required TextEditingController groupNameController,
     required XFile? image,
-    required TextEditingController passController,
   }) async {
     String imageurl = "";
     String mNum = Hive.box(HiveApi.configrationBox).get(HiveApi.mNum);
@@ -134,25 +132,21 @@ class Magmo3atCubit extends Cubit<Magmo3atState> {
       await FirebaseAuth.FirebaseAuth.instance.signOut();
     }
 
-    // add group
-    if (passController.text == password) {
-      EasyLoading.show(status: 'loading...');
-      FirebaseFirestore.instance
-          .collection("motamerat")
-          .doc(mNum)
-          .collection("groups")
-          .doc(id)
-          .set({
-        "name": groupNameController.text,
-        "members": [],
-        "imageurl": imageurl,
-        "id": id,
-      });
+    EasyLoading.show(status: 'loading...');
+    FirebaseFirestore.instance
+        .collection("motamerat")
+        .doc(mNum)
+        .collection("groups")
+        .doc(id)
+        .set({
+      "name": groupNameController.text,
+      "members": [],
+      "imageurl": imageurl,
+      "id": id,
+    });
 
-      EasyLoading.dismiss();
-      Get.back();
-    } else {
-      EasyLoading.showError("الباسورد خطأ");
-    }
+    EasyLoading.dismiss();
+    Get.back();
+    Get.snackbar("تمت الاضافة", "تمت اضافة المجموعة بنجاح");
   }
 }

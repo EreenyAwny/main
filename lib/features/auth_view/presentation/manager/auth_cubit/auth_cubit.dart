@@ -28,6 +28,7 @@ class AuthCubit extends Cubit<AuthState> {
     box.put(HiveApi.mNum, mNum);
     if (type == "admin" && passController.text == password) {
       box.put(HiveApi.type, type);
+      EasyLoading.dismiss();
       Get.offNamed(GetPages.kHomeView);
     } else if (type == "admin" && passController.text != password) {
       EasyLoading.dismiss();

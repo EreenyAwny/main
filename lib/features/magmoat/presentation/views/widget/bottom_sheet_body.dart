@@ -9,12 +9,10 @@ class ModelBottomSheetBody extends StatelessWidget {
     super.key,
     required this.formKey,
     required this.groupNameController,
-    required this.passController,
   });
 
   final GlobalKey<FormState> formKey;
   final TextEditingController groupNameController;
-  final TextEditingController passController;
 
   @override
   Widget build(BuildContext context) {
@@ -69,36 +67,7 @@ class ModelBottomSheetBody extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 5,
-              ),
-              child: TextFormField(
-                controller: passController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "اكتب/ي الباسورد من فضلك";
-                  }
-                  return null;
-                },
-                obscureText: true,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 15,
-                  ),
-                  hintStyle: const TextStyle(
-                    fontSize: 20,
-                  ),
-                  hintText: "الباسورد",
-                  prefixIcon: const Icon(Icons.lock),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-              ),
-            ),
+            const SizedBox(height: 10),
             // select image from gallery
             ElevatedButton(
               onPressed: () async {
@@ -121,7 +90,6 @@ class ModelBottomSheetBody extends StatelessWidget {
                   BlocProvider.of<Magmo3atCubit>(context).addGroup(
                     groupNameController: groupNameController,
                     image: image,
-                    passController: passController,
                   );
                 }
               },
