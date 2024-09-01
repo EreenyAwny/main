@@ -16,8 +16,12 @@ class NameTextBox extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextFormField(
         validator: (value) {
+          // text should contain three words
           if (value == null || value.isEmpty) {
             return "اكتب/ي اسمك يا نجم/ه";
+          }
+          if (value.split(" ").length < 3) {
+            return "الاسم لازم يكون من ثلاثي علشان تشابه الاسماء";
           }
           return null;
         },

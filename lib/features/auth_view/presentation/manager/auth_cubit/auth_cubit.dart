@@ -20,26 +20,35 @@ class AuthCubit extends Cubit<AuthState> {
   String mNum = "first";
   TextEditingController passController = TextEditingController();
 
-  submit({required String name}) {
+  submit({required String name}) async {
     EasyLoading.show(status: 'جاري التحميل...');
-    // save data to hive
-    Box box = Hive.box(HiveApi.configrationBox);
-    box.put(HiveApi.userNamekey, name);
-    box.put(HiveApi.mNum, mNum);
-    if (type == "admin" && passController.text == password) {
-      box.put(HiveApi.type, type);
+    // getting all data from firebase firestore
+    List<String> users = await gettingAllUsersNames(mNum: mNum);
+    // ensure that the user is not exist
+    if (users.contains(name)) {
       EasyLoading.dismiss();
-      Get.offNamed(GetPages.kHomeView);
-    } else if (type == "admin" && passController.text != password) {
-      EasyLoading.dismiss();
-      EasyLoading.showError("كلمة المرور غير صحيحة");
-      box.put(HiveApi.type, type);
+      EasyLoading.showError("الاسم موجود بالفعل");
+      return;
     } else {
-      box.put(HiveApi.type, type);
-      // save data to firebase firestore
-      _saveDataToFirestore(name: name, mNum: mNum);
-      EasyLoading.dismiss();
-      Get.offNamed(GetPages.kHomeView);
+      // save data to hive
+      Box box = Hive.box(HiveApi.configrationBox);
+      box.put(HiveApi.userNamekey, name);
+      box.put(HiveApi.mNum, mNum);
+      if (type == "admin" && passController.text == password) {
+        box.put(HiveApi.type, type);
+        EasyLoading.dismiss();
+        Get.offNamed(GetPages.kHomeView);
+      } else if (type == "admin" && passController.text != password) {
+        EasyLoading.dismiss();
+        EasyLoading.showError("كلمة المرور غير صحيحة");
+        box.put(HiveApi.type, type);
+      } else {
+        box.put(HiveApi.type, type);
+        // save data to firebase firestore
+        _saveDataToFirestore(name: name, mNum: mNum);
+        EasyLoading.dismiss();
+        Get.offNamed(GetPages.kHomeView);
+      }
     }
   }
 

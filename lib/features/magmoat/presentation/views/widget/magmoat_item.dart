@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:hive/hive.dart';
+import 'package:mutamaruna/core/hive_api.dart';
 import 'package:mutamaruna/features/magmoat/data/models/groups_model/groups_model.dart';
 import 'package:mutamaruna/features/magmoat/presentation/manager/magmo3at_cubit/magmo3at_cubit.dart';
 import 'package:mutamaruna/features/magmoat/presentation/views/widget/group_image.dart';
@@ -66,6 +70,55 @@ class MagmoatItem extends StatelessWidget {
             }
           },
         );
+      },
+      onLongPress: () {
+        if (Hive.box(HiveApi.configrationBox).get(HiveApi.type) == "admin") {
+          // delete group
+          showDialog(
+            context: context,
+            builder: (context) {
+              return BlocProvider(
+                create: (context) => Magmo3atCubit(),
+                child: AlertDialog(
+                  title: const Text("هل تريد حذف المجموعة"),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context, false);
+                      },
+                      child: const Text("لا"),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        EasyLoading.show(status: "جاري الحذف");
+                        await FirebaseFirestore.instance
+                            .collection("motamerat")
+                            .doc(Hive.box(HiveApi.configrationBox)
+                                .get(HiveApi.mNum))
+                            .collection("groups")
+                            .doc(groups[index].id)
+                            .delete();
+                        EasyLoading.dismiss();
+                        EasyLoading.showSuccess("تم حذف المجموعة");
+                        Navigator.pop(context, true);
+                      },
+                      child: const Text("نعم"),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ).then((value) {
+            if (value == true) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("تم حذف المجموعة"),
+                ),
+              );
+              BlocProvider.of<Magmo3atCubit>(context).init();
+            }
+          });
+        }
       },
       child: Container(
         margin: const EdgeInsets.all(10),
