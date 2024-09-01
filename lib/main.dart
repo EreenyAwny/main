@@ -21,8 +21,6 @@ void main() async {
   HiveApi hiveApi = HiveApi();
   hiveApi.openBoxes();
   hiveApi.init();
-  // String token = await GetAccessToken().getAccessToken();
-  // print("token: $token");
   Notifications().subscribeToGeneralTopic();
   runApp(const MyApp());
 }

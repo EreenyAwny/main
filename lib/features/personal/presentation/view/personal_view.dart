@@ -36,6 +36,15 @@ class PersonalView extends StatelessWidget {
                     ),
                   )
                 : const SizedBox(),
+            Hive.box(HiveApi.configrationBox).get(HiveApi.type) == "admin"
+                ? IconButton(
+                    icon: const Icon(Icons.settings, color: Colors.white),
+                    iconSize: 30,
+                    onPressed: () {
+                      Get.toNamed(GetPages.ksettingsView);
+                    },
+                  )
+                : const SizedBox(),
           ],
           centerTitle: true,
           title: const Text(

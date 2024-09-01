@@ -21,7 +21,7 @@ class NameTextBox extends StatelessWidget {
             return "اكتب/ي اسمك يا نجم/ه";
           }
           if (value.split(" ").length < 3) {
-            return "الاسم لازم يكون من ثلاثي علشان تشابه الاسماء";
+            return "الاسم لازم يكون ثلاثي علشان تشابه الاسماء";
           }
           return null;
         },

@@ -27,7 +27,39 @@ class AuthCubit extends Cubit<AuthState> {
     // ensure that the user is not exist
     if (users.contains(name)) {
       EasyLoading.dismiss();
-      EasyLoading.showError("الاسم موجود بالفعل");
+      // show dialog to ask the user to continue or not
+      Get.defaultDialog(
+        title: "تحذير",
+        middleText:
+            "هذا المستخدم موجود بالفعل هل تريد الاستمرار بنفس الاسم والبيانات؟",
+        actions: [
+          TextButton(
+            onPressed: () {
+              EasyLoading.dismiss();
+              Box box = Hive.box(HiveApi.configrationBox);
+              box.put(HiveApi.userNamekey, name);
+              box.put(HiveApi.mNum, mNum);
+              if (type == "admin" && passController.text == password) {
+                box.put(HiveApi.type, type);
+                EasyLoading.dismiss();
+                Get.offNamed(GetPages.kHomeView);
+              } else if (type == "admin" && passController.text != password) {
+                box.put(HiveApi.type, type);
+              } else {
+                box.put(HiveApi.type, type);
+                Get.offNamed(GetPages.kHomeView);
+              }
+            },
+            child: const Text("نعم انا نفس الشخص"),
+          ),
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text("لا هكتب اسم تاني"),
+          ),
+        ],
+      );
       return;
     } else {
       // save data to hive
@@ -97,4 +129,20 @@ Future<List<String>> gettingAllUsersNames({required String mNum}) async {
   box.put(HiveApi.allUserskey, users);
 
   return users;
+}
+
+Stream<List<String>> streamAllUsersNames({required String mNum}) {
+  return FirebaseFirestore.instance
+      .collection("users")
+      .doc(mNum)
+      .snapshots()
+      .map((snapshot) {
+    List<String> users = [];
+    if (snapshot.exists) {
+      users = List<String>.from(snapshot.data()!["users"]);
+    }
+    Box box = Hive.box(HiveApi.configrationBox);
+    box.put(HiveApi.allUserskey, users);
+    return users;
+  });
 }
