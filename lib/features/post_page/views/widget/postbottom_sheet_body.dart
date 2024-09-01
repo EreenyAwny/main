@@ -26,87 +26,89 @@ class ModelBottomSheetBody2 extends StatelessWidget {
       ),
       child: Form(
         key: formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 10),
-            const Text(
-              "اضافة منشور جديد",
-              style: TextStyle(fontSize: 30),
-            ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 5,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 10),
+              const Text(
+                "اضافة منشور جديد",
+                style: TextStyle(fontSize: 30),
               ),
-              child: TextFormField(
-                controller: postNameController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+                child: TextFormField(
+                  controller: postNameController,
+                  maxLines: 15,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return null;
+                    }
                     return null;
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 15,
-                  ),
-                  hintStyle: const TextStyle(
-                    fontSize: 20,
-                  ),
-                  hintText: "اضافه تعليق",
-                  prefixIcon: const Icon(Icons.group),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
+                  },
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 30,
+                      vertical: 15,
+                    ),
+                    hintStyle: const TextStyle(
+                      fontSize: 20,
+                    ),
+                    hintText: "اضافه تعليق",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
                 ),
               ),
-            ),
 
-            // select image from gallery
-            ElevatedButton(
-              onPressed: () async {
-                // select image from gallery
-                final ImagePicker picker = ImagePicker();
-                image = await picker.pickImage(source: ImageSource.gallery);
-              },
-              style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(mainColor),
+              // select image from gallery
+              ElevatedButton(
+                onPressed: () async {
+                  // select image from gallery
+                  final ImagePicker picker = ImagePicker();
+                  image = await picker.pickImage(source: ImageSource.gallery);
+                },
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(mainColor),
+                ),
+                child: const Text(
+                  "اضافه صورة",
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
               ),
-              child: const Text(
-                "اضافه صورة",
-                style: TextStyle(fontSize: 20, color: Colors.white),
-              ),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () async {
-                if (formKey.currentState!.validate()) {
-                  await BlocProvider.of<PostCubit>(context).addpost(
-                    postNameController: postNameController,
-                    image: image,
-                  );
-                  Navigator.of(context).pop(true);
-                }
-              },
-              style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(mainColor),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 50),
-                child: Text(
-                  "اضافة",
-                  style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.white,
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () async {
+                  if (formKey.currentState!.validate()) {
+                    await BlocProvider.of<PostCubit>(context).addpost(
+                      postNameController: postNameController,
+                      image: image,
+                    );
+                    Navigator.of(context).pop(true);
+                  }
+                },
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(mainColor),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 50),
+                  child: Text(
+                    "اضافة",
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 30),
-          ],
+              const SizedBox(height: 30),
+            ],
+          ),
         ),
       ),
     );
