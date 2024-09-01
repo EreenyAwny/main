@@ -61,7 +61,7 @@ class SplashView extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 20),
               child: ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(mainColor),

@@ -23,68 +23,70 @@ class EditNoteView extends StatelessWidget {
       ),
       body: Form(
         key: formState,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              TextFormField(
-                initialValue: note_title,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    hintText: "اضف العنوان",
-                    hintStyle: const TextStyle(fontWeight: FontWeight.w300)),
-                validator: (newvalue) {
-                  note_toChange!.namee = newvalue;
-                  note_toChange?.save();
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                initialValue: note_detail,
-                maxLines: 20,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    hintText: "اضف ملاحظتك",
-                    hintStyle: const TextStyle(fontWeight: FontWeight.w300)),
-                validator: (value) {
-                  note_toChange!.note = value;
-                  note_toChange?.save();
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  if (formState.currentState!.validate()) {
-                    formState.currentState!.save();
-                  }
-                  BlocProvider.of<NotesCubit>(context).fechAllNotes();
-                  Get.back(result: true);
-                },
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all<Color>(
-                    mainColor,
-                  ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: Column(
+              children: [
+                TextFormField(
+                  initialValue: note_title,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      hintText: "اضف العنوان",
+                      hintStyle: const TextStyle(fontWeight: FontWeight.w300)),
+                  validator: (newvalue) {
+                    note_toChange!.namee = newvalue;
+                    note_toChange?.save();
+                    return null;
+                  },
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    "حفظ التعديل",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  initialValue: note_detail,
+                  maxLines: 12,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      hintText: "اضف ملاحظتك",
+                      hintStyle: const TextStyle(fontWeight: FontWeight.w300)),
+                  validator: (value) {
+                    note_toChange!.note = value;
+                    note_toChange?.save();
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (formState.currentState!.validate()) {
+                      formState.currentState!.save();
+                    }
+                    BlocProvider.of<NotesCubit>(context).fechAllNotes();
+                    Get.back(result: true);
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all<Color>(
+                      mainColor,
                     ),
                   ),
-                ),
-              )
-            ],
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      "حفظ التعديل",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

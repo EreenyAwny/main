@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -63,6 +64,11 @@ class PostItem extends StatelessWidget {
                                   btnOkText: "رجوع",
                                   btnCancelText: "حذف",
                                   btnCancelOnPress: () async {
+                                    if (posts[index]["imageurl"] != "null") {
+                                      FirebaseStorage.instance
+                                          .refFromURL(posts[index]["imageurl"])
+                                          .delete();
+                                    }
                                     await FirebaseFirestore.instance
                                         .collection('motamerat')
                                         .doc(Hive.box(HiveApi.configrationBox)

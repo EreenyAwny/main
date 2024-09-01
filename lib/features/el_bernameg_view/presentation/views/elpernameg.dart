@@ -35,19 +35,19 @@ class _Elpernameg extends State<Elpernameg> {
           children: const [
             Item(
               day: "اليوم الاول",
-              photo: "images/Screenshot (172).png",
+              photo: "images/1.png",
             ),
             Item(
               day: "اليوم الثانى",
-              photo: "images/Screenshot (177).png",
+              photo: "images/2.png",
             ),
             Item(
               day: "اليوم الثالث",
-              photo: "images/Screenshot (172).png",
+              photo: "images/3.png",
             ),
             Item(
               day: "اليوم الرابع",
-              photo: "images/Screenshot (177).png",
+              photo: "images/4.png",
             ),
           ],
         ),
