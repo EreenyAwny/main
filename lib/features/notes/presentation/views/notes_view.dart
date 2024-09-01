@@ -72,30 +72,22 @@ class _NotesView extends State<NotesView> {
                               BlocProvider.of<NotesCubit>(context)
                                   .fechAllNotes();
                             },
-                            btnOkOnPress: () {
+                            btnOkOnPress: () async {
                               note_title = note[i].namee!;
                               note_detail = note[i].note!;
                               note_toChange = note[i];
-                              Get.toNamed(GetPages.kEditNoteView);
+                              bool result =
+                                  await Get.toNamed(GetPages.kEditNoteView);
+                              if (result == true) {
+                                BlocProvider.of<NotesCubit>(context)
+                                    .fechAllNotes();
+                              }
                             },
                           ).show();
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                            boxShadow: const [
-                              BoxShadow(
-                                blurRadius: 5,
-                                offset: Offset(1, 1),
-                                blurStyle: BlurStyle.normal,
-                                color: Colors.black12,
-                                spreadRadius: 2,
-                              )
-                            ],
-                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -118,17 +110,24 @@ class _NotesView extends State<NotesView> {
                       ),
                       const SizedBox(
                         height: 10,
-                      )
+                      ),
+                      const Divider(
+                        height: 1,
+                        endIndent: 20,
+                        indent: 20,
+                      ),
                     ],
                   );
                 }),
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Get.toNamed(GetPages.kAddnotes);
+            onPressed: () async {
+              bool result = await Get.toNamed(GetPages.kAddnotes);
+              if (result == true) {
+                BlocProvider.of<NotesCubit>(context).fechAllNotes();
+              }
             },
             backgroundColor: Colors.blue,
-            shape: const CircleBorder(),
             child: const Icon(Icons.add),
           ),
         );

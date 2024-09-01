@@ -84,10 +84,11 @@ class ModelBottomSheetBody2 extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 if (formKey.currentState!.validate()) {
-                  BlocProvider.of<PostCubit>(context).addpost(
+                  await BlocProvider.of<PostCubit>(context).addpost(
                     postNameController: postNameController,
                     image: image,
                   );
+                  Navigator.of(context).pop(true);
                 }
               },
               style: ButtonStyle(

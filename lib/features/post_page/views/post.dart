@@ -21,6 +21,7 @@ class _Post extends State<Post> {
     return BlocProvider(
       create: (context) => PostCubit()..init(),
       child: Scaffold(
+        backgroundColor: mainColor,
         floatingActionButton: AddPostButton(
           formKey: formKey,
           postNameController: postNameController,
@@ -34,7 +35,12 @@ class _Post extends State<Post> {
           backgroundColor: mainColor,
           leading: null,
         ),
-        body: const PostBody(),
+        body: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+            ),
+            child: Container(color: Colors.white, child: const PostBody())),
       ),
     );
   }

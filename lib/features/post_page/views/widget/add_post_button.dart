@@ -36,7 +36,16 @@ class AddPostButton extends StatelessWidget {
               ),
             );
           },
-        );
+        ).then((value) async {
+          if (value != null && value) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("تم اضافة المنشور بنجاح"),
+              ),
+            );
+            await BlocProvider.of<PostCubit>(context).init();
+          }
+        });
       },
       backgroundColor: mainColor,
       child: const Icon(Icons.add),

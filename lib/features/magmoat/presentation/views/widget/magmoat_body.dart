@@ -22,14 +22,19 @@ class MagmoatBody extends StatelessWidget {
               child: Text("لا يوجد مجموعات", style: TextStyle(fontSize: 25)),
             );
           } else {
-            return ListView.builder(
-              itemCount: state.groups.length,
-              itemBuilder: (context, index) {
-                return MagmoatItem(
-                  groups: state.groups,
-                  index: index,
-                );
+            return RefreshIndicator(
+              onRefresh: () async {
+                await context.read<Magmo3atCubit>().init();
               },
+              child: ListView.builder(
+                itemCount: state.groups.length,
+                itemBuilder: (context, index) {
+                  return MagmoatItem(
+                    groups: state.groups,
+                    index: index,
+                  );
+                },
+              ),
             );
           }
         } else {

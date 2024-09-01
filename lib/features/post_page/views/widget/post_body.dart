@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mutamaruna/core/constants.dart';
 import 'package:mutamaruna/features/post_page/presentation/manager/post_cubit/post_cubit.dart';
 import 'package:mutamaruna/features/post_page/views/widget/post_items.dart';
 
@@ -22,14 +23,20 @@ class PostBody extends StatelessWidget {
               child: Text("لا يوجد منشورات", style: TextStyle(fontSize: 25)),
             );
           } else {
-            return ListView.builder(
-              itemCount: state.posts.length,
-              itemBuilder: (context, index) {
-                return PostItem(
-                  posts: state.posts,
-                  index: state.posts.length - 1 - index,
-                );
+            return RefreshIndicator(
+              onRefresh: () async {
+                await context.read<PostCubit>().init();
               },
+              color: mainColor,
+              child: ListView.builder(
+                itemCount: state.posts.length,
+                itemBuilder: (context, index) {
+                  return PostItem(
+                    posts: state.posts,
+                    index: state.posts.length - 1 - index,
+                  );
+                },
+              ),
             );
           }
         } else {

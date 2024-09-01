@@ -13,11 +13,13 @@ class HiveApi {
   static String userNamekey = 'userName';
   static String membersKey = 'membersKey';
   static String type = 'type';
+  static String postsBox = 'posts';
 
   void openBoxes() {
     Hive.openBox(grades);
     Hive.openBox(configrationBox);
     Hive.openBox<NoteModel>(knoteBox);
+    Hive.openBox(postsBox);
   }
 
   void init() {

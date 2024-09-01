@@ -124,7 +124,7 @@ class _AddNoteView extends State<AddNoteView> {
                                     NoteModel(namee: title, note: info);
                                 BlocProvider.of<AddnoteCubit>(context)
                                     .addnote(notemodel);
-                                Get.back(result: notemodel);
+                                Get.back(result: true);
                               }
                             },
                             style: ButtonStyle(

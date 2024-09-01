@@ -23,87 +23,161 @@ class PostItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Box box = Hive.box(HiveApi.configrationBox);
-    return Container(
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 5,
-            spreadRadius: 2,
-            offset: Offset(0, 3),
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(10),
           ),
-        ],
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: BlocBuilder<PostCubit, PostState>(
-        builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          child: BlocBuilder<PostCubit, PostState>(
+            builder: (context, state) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: ListTile(
-                      title: Text(
-                        "${posts[index]["name"]}",
-                        style: const TextStyle(fontSize: 21),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: ListTile(
+                          title: Text(
+                            "${posts[index]["name"]}",
+                            style: const TextStyle(fontSize: 21),
+                          ),
+                          subtitle: Text("${posts[index]["time"]}"),
+                          titleTextStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                          ),
+                        ),
                       ),
-                      subtitle: Text("${posts[index]["time"]}"),
-                      titleTextStyle: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
+                      box.get(HiveApi.userNamekey) == posts[index]["name"] ||
+                              box.get(HiveApi.type) == "admin"
+                          ? IconButton(
+                              onPressed: () async {
+                                await AwesomeDialog(
+                                  context: context,
+                                  animType: AnimType.rightSlide,
+                                  desc: "هل تريد حذف المنشور ؟",
+                                  btnOkText: "رجوع",
+                                  btnCancelText: "حذف",
+                                  btnCancelOnPress: () async {
+                                    await FirebaseFirestore.instance
+                                        .collection('motamerat')
+                                        .doc(Hive.box(HiveApi.configrationBox)
+                                            .get(HiveApi.mNum))
+                                        .collection('posts')
+                                        .doc(posts[index].id)
+                                        .delete();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text("تم حذف المنشور"),
+                                      ),
+                                    );
+                                    await BlocProvider.of<PostCubit>(context)
+                                        .init();
+                                  },
+                                  btnOkOnPress: () {},
+                                ).show();
+                                // show snackbar
+                              },
+                              icon: const Icon(Icons.delete),
+                            )
+                          : const SizedBox(),
+                    ],
+                  ),
+                  Text(
+                    "${posts[index]["text"]}",
+                    style: const TextStyle(
+                      fontSize: 15,
                     ),
                   ),
-                  box.get(HiveApi.userNamekey) == posts[index]["name"] ||
-                          box.get(HiveApi.type) == "admin"
-                      ? IconButton(
-                          onPressed: () {
-                            AwesomeDialog(
-                              context: context,
-                              animType: AnimType.rightSlide,
-                              desc: "هل تريد حذف المنشور ؟",
-                              btnOkText: "رجوع",
-                              btnCancelText: "حذف",
-                              btnCancelOnPress: () {
-                                FirebaseFirestore.instance
-                                    .collection('motamerat')
-                                    .doc(Hive.box(HiveApi.configrationBox)
-                                        .get(HiveApi.mNum))
-                                    .collection('posts')
-                                    .doc(posts[index].id)
-                                    .delete();
-                              },
-                              btnOkOnPress: () {},
-                            ).show();
-                          },
-                          icon: const Icon(Icons.delete),
+                  if (posts[index]["imageurl"] != "null")
+                    InkWell(
+                      onTap: () {
+                        post_image = posts[index]["imageurl"];
+                        Get.toNamed(GetPages.kImageView);
+                      },
+                      child: PostImage(posts: posts, index: index),
+                    ),
+                  const SizedBox(height: 7),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: mainColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Row(
+                              children: [
+                                Text("${posts[index]["likes"]}"),
+                                IconButton(
+                                  onPressed: () async {
+                                    if (Hive.box(HiveApi.postsBox)
+                                            .get(posts[index].id) ??
+                                        false) {
+                                      await FirebaseFirestore.instance
+                                          .collection('motamerat')
+                                          .doc(Hive.box(HiveApi.configrationBox)
+                                              .get(HiveApi.mNum))
+                                          .collection('posts')
+                                          .doc(posts[index].id)
+                                          .update({
+                                        "likes": posts[index]["likes"] - 1,
+                                      });
+                                      Box box = Hive.box(HiveApi.postsBox);
+                                      box.put(posts[index].id, false);
+                                    } else {
+                                      await FirebaseFirestore.instance
+                                          .collection('motamerat')
+                                          .doc(Hive.box(HiveApi.configrationBox)
+                                              .get(HiveApi.mNum))
+                                          .collection('posts')
+                                          .doc(posts[index].id)
+                                          .update({
+                                        "likes": posts[index]["likes"] + 1,
+                                      });
+                                      Box box = Hive.box(HiveApi.postsBox);
+                                      box.put(posts[index].id, true);
+                                    }
+                                    await BlocProvider.of<PostCubit>(context)
+                                        .init();
+                                  },
+                                  icon: Icon(
+                                    Hive.box(HiveApi.postsBox)
+                                                .get(posts[index].id) ??
+                                            false
+                                        ? Icons.favorite
+                                        : Icons.favorite_border_outlined,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         )
-                      : const SizedBox(),
+                      ],
+                    ),
+                  ),
                 ],
-              ),
-              Text(
-                "${posts[index]["text"]}",
-                style: const TextStyle(
-                  fontSize: 15,
-                ),
-              ),
-              if (posts[index]["imageurl"] != "null")
-                InkWell(
-                  onTap: () {
-                    post_image = posts[index]["imageurl"];
-                    Get.toNamed(GetPages.kImageView);
-                  },
-                  child: PostImage(posts: posts, index: index),
-                ),
-            ],
-          );
-        },
-      ),
+              );
+            },
+          ),
+        ),
+        const Divider(
+          endIndent: 20,
+          indent: 20,
+        )
+      ],
     );
   }
 }

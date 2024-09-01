@@ -12,21 +12,26 @@ class PostImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: posts[index]["imageurl"] == "null"
-            ? Container(
-                height: 10,
-                width: 10,
-                color: Colors.red,
-              )
-            : Image(
-                image: NetworkImage(posts[index]["imageurl"]),
-                fit: BoxFit.contain,
-              ),
-      ),
-    );
+    if (posts[index]["imageurl"] == "null") {
+      return Container(
+        height: 10,
+        width: 10,
+        color: Colors.red,
+      );
+    } else {
+      return ConstrainedBox(
+        constraints: const BoxConstraints(
+          maxHeight: 300,
+          minWidth: double.infinity,
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Image(
+            image: NetworkImage(posts[index]["imageurl"]),
+            fit: BoxFit.contain,
+          ),
+        ),
+      );
+    }
   }
 }

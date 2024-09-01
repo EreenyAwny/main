@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -22,7 +21,7 @@ class PostCubit extends Cubit<PostState> {
 
   PostCubit() : super(PostInitial());
 
-  init() async {
+  Future<void> init() async {
     // check internet
     bool isconected = await checkInternet();
     kIsconected = isconected;
@@ -53,12 +52,14 @@ class PostCubit extends Cubit<PostState> {
     required TextEditingController postNameController,
     required XFile? image,
   }) async {
+    EasyLoading.show(status: 'loading...');
     String imageurl = "null";
     String mNum = Hive.box(HiveApi.configrationBox).get(HiveApi.mNum);
     String id = DateTime.now().millisecondsSinceEpoch.toString();
 
     // upload image
     if (image != null) {
+      EasyLoading.dismiss();
       EasyLoading.show(status: 'uploading image');
 
       // sign in anonymously
@@ -79,10 +80,10 @@ class PostCubit extends Cubit<PostState> {
     }
     String dateOBDCommand = DateTime.now().toString();
     DateTime date = DateTime.parse(dateOBDCommand);
-    String result = DateFormat('yyyy-MM-dd H:m').format(date);
+    String result = DateFormat('yyyy-MM-dd | HH:mm').format(date);
     // add post
     EasyLoading.show(status: 'loading...');
-    FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection("motamerat")
         .doc(mNum)
         .collection("posts")
@@ -93,12 +94,8 @@ class PostCubit extends Cubit<PostState> {
       "imageurl": imageurl,
       "id": id,
       "time": result,
+      "likes": 0,
     });
-
     EasyLoading.dismiss();
-    Get.back();
   }
 }
-/*String dateOBDCommand = DateTime.now.toString();
-    DateTime date = DateTime.parse(dateOBDCommand);
-    String result = DateFormat('yyyy-MM-dd H:m').format(date);*/
