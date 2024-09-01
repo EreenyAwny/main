@@ -53,10 +53,10 @@ class MagmoatItem extends StatelessWidget {
                   Expanded(
                     child: ListView.builder(
                       itemCount: groups[index].members!.length,
-                      itemBuilder: (context, index) {
+                      itemBuilder: (context, index1) {
                         return ListTile(
                           title: Text(
-                            '${index + 1} - ${groups[index].members![index]}',
+                            '${index1 + 1} - ${groups[index].members![index1]}',
                             style: const TextStyle(
                               fontSize: 20,
                             ),
