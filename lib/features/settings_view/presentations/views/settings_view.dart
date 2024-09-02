@@ -67,7 +67,8 @@ class SettingsView extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: ListTile(
-                                  title: Text(snapshot.data![index]),
+                                  title: Text(
+                                      "${index + 1} - ${snapshot.data![index]}"),
                                   leading: Icon(Icons.person, color: mainColor),
                                   onTap: () {
                                     // show dialog to confirm delete

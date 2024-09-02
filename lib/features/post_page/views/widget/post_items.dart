@@ -165,6 +165,7 @@ class PostItem extends StatelessWidget {
                                             false
                                         ? Icons.favorite
                                         : Icons.favorite_border_outlined,
+                                    color: Colors.red,
                                   ),
                                 ),
                               ],
